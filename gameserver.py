@@ -1,7 +1,6 @@
 import socket
 import threading 
 
-
 class GameInstanceServer:
 	"""Ta klasa jest instancją gry pomiędzy dwoma graczami. Zajmuję się komunikcją klientów"""
 
@@ -95,6 +94,6 @@ class ManageGames(socket.socket):
 		"""To będzie dynamicznie wyświetlało status serwerów"""
 		print("not working lol")
 
-# m = ManageGames()
+
 	
 
