@@ -1,2 +1,2 @@
 # Neuros-v2
-To będzie nasze repo!
+Card game written in python!
