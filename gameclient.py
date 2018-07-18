@@ -1,44 +1,58 @@
 import socket
-from threading import Thread
 import json
-
-test_data = {
-	"player name" : "Bob",
-	"Health" : 100,
-	"Attack" : 50
-}
-
-clean_data = json.dumps(test_data)
-
+from threading import Thread
 
 host, port = "localhost", 5000
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect((host, port))
-data = s.recv(1024).decode("utf-8")
-print(data)
+class GameClient(socket.socket):
+	"""Ta klasa połącza się z serwerem i komunikuję się z iną instancją tej klasy"""
 
-def listener():
-	while True:
-		data = s.recv(1024).decode("utf-8")
-		if not data:
-			from sys import exit
-			exit()
-		print("Recieved from server: " + data)
+	def __init__(self, host, port): # param payload (dict)
+		"""Ta funkcja inicjalizuję tą klase"""
 
-s.sendall(clean_data.encode("utf-8"))
+		super().__init__(socket.AF_INET, socket.SOCK_STREAM) # init parent class
+		#self.payload = dict with game info
+		#self.recieved_payload = some data this klient recieves from other client
+		self.listenerThread = Thread(target = self.listener)
+		self.transmitterThread = Thread(target = self.transmitter) 
+		
+		self.connect((host, port)) # establish connection to server
+		welcome_message = self.recv(1024).decode("utf-8")
+		print(welcome_message)
 
-def broadcaster():
-	while True:
-		message = input("-> ")
-		s.sendall(message.encode("utf-8"))
-	s.close()
+		self.listenerThread.start()
+		self.transmitterThread.start()
+	
+	def listener(self):
+		"""Ta funkcja czeka na wiadomość od drugiego klienta za pomocą serwera"""
+		
+		while True:
+			data = self.recv(1024).decode("utf-8")
+			if not data:
+				from sys import exit
+				exit()
+			print("Recieved from server: " + data)
 
-l = Thread(target = listener)
-b = Thread(target = broadcaster)
+	def transmitter(self): # add paramenter data instead of local var message (data will be json)
+		"""Ta funkcja wysyła wiadomość do drugiego klienta za pomocą serwera"""
 
-l.start()
-b.start()
+		while True:
+			message = input("-> ")
+			self.sendall(message.encode("utf-8"))
+		self.close()
+
+	def serialize(self):
+		"""Zamienia pythonowe obiekty na json"""
+		return json.dumps(self.payload)
+
+	def deserialize(self):
+		"""Zamienia json obiekty na python"""
+		return json.loads(self.recieved_payload)
+
+
+# a = GameClient(host, port)
+
+
 
 
 
