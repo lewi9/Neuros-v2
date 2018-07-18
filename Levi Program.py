@@ -285,7 +285,7 @@ for i in range(0,10):
     texture = pygame.Rect(down_barrack_list_left_x[i], down_barrack_up_y,widthcard,heightcard)
     pygame.draw.rect(screen, card_color, texture)
     
-pygame.display.flip()
+pygame.display.update()
 
 while True:
     for event in pygame.event.get():
