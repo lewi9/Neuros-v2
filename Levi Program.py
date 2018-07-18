@@ -19,7 +19,7 @@ heightscreen = 690
 
 #Screen set
 screen = pygame.display.set_mode((widthscreen, heightscreen))
-screen.fill((30,0,0))
+screen.fill((39, 117, 112))
 
 #Sizes
 onewidhtunit = widthscreen/130
@@ -262,27 +262,28 @@ down_deck_list_right_x = [
 down_deck_up_y = y + (heightmargin*8) + (heightcard*8) + bigheightmargin 
 
 
+card_color = (221, 220, 186)
 
 #Drawing Commands
 for i in range(0,10):
 
     if i < 2:
         texture = pygame.Rect(up_deck_list_left_x[i], up_deck_up_y, widthcard, heightcard)
-        pygame.draw.rect(screen, (0, 0, 0), texture)
+        pygame.draw.rect(screen, card_color, texture)
         texture = pygame.Rect(down_deck_list_left_x[i], down_deck_up_y, widthcard, heightcard)
-        pygame.draw.rect(screen, (0, 0, 0), texture)
+        pygame.draw.rect(screen, card_color, texture)
     texture = pygame.Rect(up_barrack_list_left_x[i], up_barrack_up_y,widthcard,heightcard)
-    pygame.draw.rect(screen, (0, 0, 0), texture)
+    pygame.draw.rect(screen, card_color, texture)
     texture = pygame.Rect(up_defense_list_left_x[i], up_defense_up_y,widthcard,heightcard)
-    pygame.draw.rect(screen, (0, 0, 0), texture)
+    pygame.draw.rect(screen, card_color, texture)
     texture = pygame.Rect(up_attack_list_left_x[i], up_attack_up_y,widthcard,heightcard)
-    pygame.draw.rect(screen, (0, 0, 0), texture)
+    pygame.draw.rect(screen, card_color, texture)
     texture = pygame.Rect(down_attack_list_left_x[i], down_attack_up_y,widthcard,heightcard)
-    pygame.draw.rect(screen, (0, 0, 0), texture)
+    pygame.draw.rect(screen, card_color, texture)
     texture = pygame.Rect(down_defense_list_left_x[i], down_defense_up_y,widthcard,heightcard)
-    pygame.draw.rect(screen, (0, 0, 0), texture)
+    pygame.draw.rect(screen, card_color, texture)
     texture = pygame.Rect(down_barrack_list_left_x[i], down_barrack_up_y,widthcard,heightcard)
-    pygame.draw.rect(screen, (0, 0, 0), texture)
+    pygame.draw.rect(screen, card_color, texture)
     
 pygame.display.flip()
 
