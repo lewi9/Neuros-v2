@@ -10,9 +10,8 @@ import pygame, sys
 
 #I will import my modules
 from init_dimensions import *
-from init_drawing import *
+from drawings import DrawObjects
 from Settings import *
-
 
 
 class Game:  
@@ -54,19 +53,12 @@ class Game:
     
     def draw(self):
         # Gameloop - Draw
-        self.screen.fill(BACKGROUND_COLOR)
-        
-        for i in range(0,6):
-            for ii in range(0,10):
-                texture = pygame.Rect(left_x_list[i][ii], up_y_list[i], widthcard, heightcard)
-                pygame.draw.rect(self.screen, PLACE_FOR_CARD_COLOR[i], texture)
+        drawer = DrawObjects(self.screen)
 
-        for i in range(0,2):
-            texture = pygame.Rect(up_deck_list_left_x[i], up_deck_up_y, widthcard, heightcard)
-            pygame.draw.rect(self.screen, DECK_LINE_COLOR, texture)
-            texture = pygame.Rect(down_deck_list_left_x[i], down_deck_up_y, widthcard, heightcard)
-            pygame.draw.rect(self.screen, DECK_LINE_COLOR, texture)
-        
+        self.screen.fill(BACKGROUND_COLOR)
+
+        drawer.draw_board()
+           
         pygame.display.flip()
     
     def show_start_screen(self):
