@@ -11,6 +11,7 @@ import pygame, sys
 #I will import my modules
 from init_dimensions import *
 from drawings import DrawObjects
+from client_test_button import *
 from Settings import *
 
 
@@ -50,7 +51,14 @@ class Game:
                 if self.playing:
                     self.playing = False
                 self.running = False
-    
+
+            # event który sprawdza czy test button był naciśnięty
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mouse = pygame.mouse.get_pos()
+                clicked = wasclicked(mouse)
+                if clicked:
+                    print("yay it works :D")
+
     def draw(self):
         # Gameloop - Draw
         drawer = DrawObjects(self.screen)
@@ -58,6 +66,9 @@ class Game:
         self.screen.fill(BACKGROUND_COLOR)
 
         drawer.draw_board()
+
+        #jest tylko testowy jeżeli przeszkadza to ta funkcja jest w client_test_button.py
+        draw_test_button(self.screen)
            
         pygame.display.flip()
     
