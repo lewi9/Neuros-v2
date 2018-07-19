@@ -2,22 +2,21 @@
 # -*- coding: utf-8 -*-
 
 import pygame, sys
+from Settings import WIDTHSCREEN, HEIGHTSCREEN
+
 pygame.init()
 
-#Screen size
-widthscreen = 810
-heightscreen = 690
 
 #color of screen
 background_color = (39, 117, 112)
 
 #Screen set
-screen = pygame.display.set_mode((widthscreen, heightscreen))
+screen = pygame.display.set_mode((WIDTHSCREEN, HEIGHTSCREEN))
 screen.fill(background_color)
 
 #Sizes
-onewidhtunit = widthscreen/130
-oneheightunit = heightscreen/115
+onewidhtunit = WIDTHSCREEN/130
+oneheightunit = HEIGHTSCREEN/115
 
 widthmargin = onewidhtunit * 2
 heightmargin = oneheightunit
