@@ -21,15 +21,13 @@ class Game:
     def __init__(self):
         # initialize game window etc
         pygame.init()
-        self.screen = pygame.display.set_mode((WIDTHSCREEN, HEIGHTSCREEN))
-        pygame.display.set_caption("Neuros")
-        self.clock = pygame.time.Clock()
+        self.screen = pygame.display.set_mode((WIDTHSCREEN, HEIGHTSCREEN)) # tworzymy wielkość ekranu
+        pygame.display.set_caption("Neuros") # nadajemy nazwe ekranu
+        self.clock = pygame.time.Clock() # nie wiem jak to działa ale pozwala na fps
 
-        self.running = True
-        self.start_button_TESTER_clicked = False
-        self.start_game_button_clicked = False
+        self.running = True 
 
-        self.drawer = DrawObjects(self.screen)
+        self.drawer = DrawObjects(self.screen) 
         self.ipscreen = IpInput(self.screen)
             
     def new(self):
@@ -63,7 +61,6 @@ class Game:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse = pygame.mouse.get_pos()
                 clicked = wasclicked(mouse)
-                # print(mouse)
                 if clicked:
                     print("yay it works :D")
 
@@ -82,15 +79,12 @@ class Game:
         pygame.display.flip()
     
     def show_start_screen(self):
-        # Loads the start screen
+        # Loads the start screen        
         self.screen.fill(WHITE)
         self.drawer.draw_text("WELCOME TO NEUROS", 48, RED, WIDTHSCREEN / 2, 100)
         self.ipscreen.draw_input_box()
         self.ipscreen.draw_ip_text()
 
-        self.butt = Button(self.screen, 100, 400, 100, 100, "Test")
-        self.butt.set_text_size(30)
-        self.butt.create()
 
         pygame.display.flip()
         self.wait_for_user()
@@ -112,11 +106,7 @@ class Game:
                     clicked = self.butt.wasclicked(mouse)
                     if clicked:
                         print("hurray it works :D")
-                    
-            # if self.start_game_button_clicked or self.start_button_TESTER_clicked:
-
-
-    
+                        
     def connect_to_server(self):
         # Connect to server
         pass

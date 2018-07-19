@@ -24,6 +24,7 @@ class DrawObjects:
         self.screen = screen
 
     def draw_board(self):
+        """Draw the playing arena"""
         for i in range(6):
             for ii in range(10):
                 texture = pygame.Rect(left_x_list[i][ii], up_y_list[i], widthcard, heightcard)
@@ -36,6 +37,7 @@ class DrawObjects:
             pygame.draw.rect(self.screen, DECK_LINE_COLOR, texture)
 
     def draw_text(self, text, size, color, x, y):
+        """This draws a text in pygame. The x and y is the center of the text"""
         font = pygame.font.SysFont("monospace", size)
         text_surface = font.render(text, True, color)
         text_rect = text_surface.get_rect()
@@ -43,6 +45,7 @@ class DrawObjects:
         self.screen.blit(text_surface, text_rect)
 
     def draw_square(self, color, x, y, length, height):
+        """This draws a square"""
         button = pygame.Rect(x, y, length, height)
         pygame.draw.rect(self.screen, color, button)
 

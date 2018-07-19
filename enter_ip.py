@@ -14,6 +14,7 @@ class IpInput:
         self.input_box_cords = (100, 200)
 
     def draw_input_box(self):
+        """This draws the box where the ip will be displayed"""
         self.drawer.draw_square(CYAN, 
                                 self.input_box_cords[0],
                                 self.input_box_cords[1], 
@@ -22,6 +23,7 @@ class IpInput:
                                 )
 
     def draw_ip_text(self):
+        """This draws the ip"""
         self.drawer.draw_text(self.ip, 
                               32, 
                               BLACK,
@@ -29,12 +31,3 @@ class IpInput:
                               self.input_box_cords[1] + 25
                               )
 
-    def wasclicked(self, cords, box_cords):
-        if cords[0] > box_cords[0] and cords[0] < box_cords[0] + self.length:
-            if cords[1] < box_cords[1] and cords[1] > box_cords[1] - self.height:
-                return True
-
-    def write_input(self):
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                print("haha yes")
