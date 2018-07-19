@@ -9,8 +9,8 @@
 import pygame, sys
 
 #I will import my modules
-import init_dimensions
-# import init_drawing
+from init_dimensions import *
+from init_drawing import *
 from Settings import *
 
 
@@ -27,8 +27,8 @@ class Game:
     
     def new(self):
         # start a new game
-        pass
-        
+        self.run()
+
     def run(self):
         # Gameloop      
         self.playing = True
@@ -54,7 +54,7 @@ class Game:
     
     def draw(self):
         # Gameloop - Draw
-        self.screen.fill(background_color)
+        self.screen.fill(BACKGROUND_COLOR)
         
         for i in range(0,6):
             for ii in range(0,10):
