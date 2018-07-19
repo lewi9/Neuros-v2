@@ -35,11 +35,13 @@ for i in range(1,11):
 #Up Deck
 up_deck_list_left_x = [
     x + widthmargin,
+    x + widthmargin*2 + widthcard,
     x + (widthmargin*10) + (widthcard*9) 
 ]
 up_deck_down_y = y + (heightmargin*2) + (heightcard*2)
 up_deck_list_right_x = [
     x + widthmargin + widthcard,
+    x + widthmargin*2 + widthcard*2,
     x + (widthmargin*10) + (widthcard*10)
 ]
 up_deck_up_y = y + (heightmargin*2) + heightcard
@@ -83,14 +85,22 @@ down_barrack_up_y = y + (heightmargin*7) + (heightcard*7) + bigheightmargin
 #Down Deck
 down_deck_list_left_x = [
     x + widthmargin,
+    x + widthmargin*2 + widthcard,
     x + (widthmargin*10) + (widthcard*9)
 ]
 down_deck_down_y = y + (heightmargin*8) + (heightcard*9) + bigheightmargin
 down_deck_list_right_x = [
     x + widthmargin + widthcard,
+    x + widthmargin*2 + widthcard*2,
     x + (widthmargin*10) + (widthcard*10)
 ]
 down_deck_up_y = y + (heightmargin*8) + (heightcard*8) + bigheightmargin 
+
+#Card Viev
+card_viev_left_x = x + widthmargin*12 + widthcard*10 
+card_view_up_y = 185
+card_viev_right_x = 785
+card_viev_down_y =  515
 
 #Lists of dimensions lists
 left_x_list = [

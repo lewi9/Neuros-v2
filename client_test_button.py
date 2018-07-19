@@ -4,15 +4,15 @@ import random
 import string
 
 def draw_test_button(screen):
-    button = pygame.Rect(700, 300, 50, 50)
+    button = pygame.Rect(700, 0, 50, 50)
     pygame.draw.rect(screen, (0, 0, 0), button)
 
     myfont = pygame.font.SysFont("monospace", 15)
     label = myfont.render("TEST", 1, (255,255,0))
-    screen.blit(label, (705, 310))
+    screen.blit(label, (705, 10))
 
 def wasclicked(cords):
-    if cords[0] >= 700 and cords[1] >= 300 and cords[0] <= 750 and cords[1] <= 350:
+    if cords[0] >= 700 and cords[1] >= 0 and cords[0] <= 750 and cords[1] <= 50:
         return True
 
 def create_random_text():

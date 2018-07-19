@@ -3,7 +3,7 @@
 
 import pygame, sys
 import init_dimensions
-from Settings import DECK_LINE_COLOR, PLACE_FOR_CARD_COLOR
+from Settings import *
 
 
 #import varbiables
@@ -30,11 +30,18 @@ class DrawObjects:
                 texture = pygame.Rect(left_x_list[i][ii], up_y_list[i], widthcard, heightcard)
                 pygame.draw.rect(self.screen, PLACE_FOR_CARD_COLOR[i], texture)
 
-        for i in range(2):
+        for i in range(3):
             texture = pygame.Rect(up_deck_list_left_x[i], up_deck_up_y, widthcard, heightcard)
             pygame.draw.rect(self.screen, DECK_LINE_COLOR, texture)
             texture = pygame.Rect(down_deck_list_left_x[i], down_deck_up_y, widthcard, heightcard)
             pygame.draw.rect(self.screen, DECK_LINE_COLOR, texture)
+        texture = pygame.Rect(init_dimensions.card_viev_left_x, init_dimensions.card_view_up_y, 210, 300)    
+        pygame.draw.rect(self.screen, DECK_LINE_COLOR, texture)
+        
+        self.draw_square((0,0,0), init_dimensions.card_viev_left_x, 600, 210, 50)
+        self.draw_text("END TURN", 30, CYAN, 690, 625 )
+
+
 
     def draw_text(self, text, size, color, x, y):
         """This draws a text in pygame. The x and y is the center of the text"""
