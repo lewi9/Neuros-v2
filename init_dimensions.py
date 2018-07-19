@@ -1,18 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import pygame, sys
 from Settings import WIDTHSCREEN, HEIGHTSCREEN
-
-pygame.init()
-
-
-#color of screen
-background_color = (39, 117, 112)
-
-#Screen set
-screen = pygame.display.set_mode((WIDTHSCREEN, HEIGHTSCREEN))
-screen.fill(background_color)
 
 #Sizes
 onewidhtunit = WIDTHSCREEN/130
