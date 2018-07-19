@@ -13,6 +13,8 @@ from init_dimensions import *
 from drawings import DrawObjects
 from client_test_button import *
 from Settings import *
+from enter_ip import IpInput
+from MakeButton import Button 
 
 
 class Game:  
@@ -22,9 +24,14 @@ class Game:
         self.screen = pygame.display.set_mode((WIDTHSCREEN, HEIGHTSCREEN))
         pygame.display.set_caption("Neuros")
         self.clock = pygame.time.Clock()
-        
+
         self.running = True
-    
+        self.start_button_TESTER_clicked = False
+        self.start_game_button_clicked = False
+
+        self.drawer = DrawObjects(self.screen)
+        self.ipscreen = IpInput(self.screen)
+            
     def new(self):
         # start a new game
         self.run()
@@ -41,7 +48,7 @@ class Game:
     def update(self):
         # Gameloop - Update
         pass
-    
+
     def events(self):
         # Gameloop - Events
         for event in pygame.event.get():
@@ -56,16 +63,18 @@ class Game:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse = pygame.mouse.get_pos()
                 clicked = wasclicked(mouse)
+                # print(mouse)
                 if clicked:
                     print("yay it works :D")
 
+
     def draw(self):
         # Gameloop - Draw
-        drawer = DrawObjects(self.screen)
 
         self.screen.fill(BACKGROUND_COLOR)
 
-        drawer.draw_board()
+        self.drawer.draw_board()
+        self.ipscreen.draw_input_box((255, 0, 0))
 
         #jest tylko testowy jeżeli przeszkadza to ta funkcja jest w client_test_button.py
         draw_test_button(self.screen)
@@ -74,11 +83,39 @@ class Game:
     
     def show_start_screen(self):
         # Loads the start screen
-        pass
+        self.screen.fill(WHITE)
+        self.drawer.draw_text("WELCOME TO NEUROS", 48, RED, WIDTHSCREEN / 2, 100)
+        self.ipscreen.draw_input_box()
+        self.ipscreen.draw_ip_text()
+
+        self.butt = Button(self.screen, 100, 400, 100, 100, "Test")
+        self.butt.set_text_size(30)
+        self.butt.create()
+
+        pygame.display.flip()
+        self.wait_for_user()
     
     def game_over_screen(self):
         # Loads the game over screen
         pass
+
+    def wait_for_user(self):
+        waiting = True
+        while waiting:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    waiting = False
+                    self.running = False
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    mouse = pygame.mouse.get_pos()
+                    clicked = self.butt.wasclicked(mouse)
+                    if clicked:
+                        print("hurray it works :D")
+                    
+            # if self.start_game_button_clicked or self.start_button_TESTER_clicked:
+
+
     
     def connect_to_server(self):
         # Connect to server

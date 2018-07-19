@@ -35,5 +35,16 @@ class DrawObjects:
             texture = pygame.Rect(down_deck_list_left_x[i], down_deck_up_y, widthcard, heightcard)
             pygame.draw.rect(self.screen, DECK_LINE_COLOR, texture)
 
+    def draw_text(self, text, size, color, x, y):
+        font = pygame.font.SysFont("monospace", size)
+        text_surface = font.render(text, True, color)
+        text_rect = text_surface.get_rect()
+        text_rect.center = (x, y)
+        self.screen.blit(text_surface, text_rect)
+
+    def draw_square(self, color, x, y, length, height):
+        button = pygame.Rect(x, y, length, height)
+        pygame.draw.rect(self.screen, color, button)
+
 
 
