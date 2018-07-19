@@ -71,7 +71,6 @@ class Game:
         self.screen.fill(BACKGROUND_COLOR)
 
         self.drawer.draw_board()
-        self.ipscreen.draw_input_box((255, 0, 0))
 
         #jest tylko testowy jeżeli przeszkadza to ta funkcja jest w client_test_button.py
         draw_test_button(self.screen)
@@ -84,7 +83,10 @@ class Game:
         self.drawer.draw_text("WELCOME TO NEUROS", 48, RED, WIDTHSCREEN / 2, 100)
         self.ipscreen.draw_input_box()
         self.ipscreen.draw_ip_text()
-
+        self.dev = Button(self.screen, 600, 600, 170, 50)
+        self.dev.set_text("Dev: Wejdz do gry")
+        self.dev.set_text_size(15)
+        self.dev.create()
 
         pygame.display.flip()
         self.wait_for_user()
@@ -103,9 +105,9 @@ class Game:
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     mouse = pygame.mouse.get_pos()
-                    clicked = self.butt.wasclicked(mouse)
+                    clicked = self.dev.wasclicked(mouse)
                     if clicked:
-                        print("hurray it works :D")
+                        waiting = False
                         
     def connect_to_server(self):
         # Connect to server
