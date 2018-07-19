@@ -7,6 +7,7 @@
 #So i will import Pygame and sys
 
 import pygame, sys
+from random import shuffle
 
 #I will import my modules
 from init_dimensions import *
@@ -15,6 +16,9 @@ from client_test_button import *
 from Settings import *
 from enter_ip import IpInput
 from MakeButton import Button 
+from card import Card
+from base_of_card import *
+
 
 
 class Game:  
@@ -96,6 +100,11 @@ class Game:
 
         pygame.display.flip()
         self.wait_for_user()
+
+        #Test działania
+        print(list_of_card[5].attack)
+
+
     def game_over_screen(self):
         # Loads the game over screen
         pass
