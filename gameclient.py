@@ -11,46 +11,56 @@ class GameClient(socket.socket):
 		"""Ta funkcja inicjalizuję tą klase"""
 
 		super().__init__(socket.AF_INET, socket.SOCK_STREAM) # init parent class
-		#self.payload = dict with game info
-		#self.recieved_payload = some data this klient recieves from other client
-		self.listenerThread = Thread(target = self.listener)
-		self.transmitterThread = Thread(target = self.transmitter) 
 		
-		self.connect((host, port)) # establish connection to server
-		welcome_message = self.recv(1024).decode("utf-8")
-		print(welcome_message)
+		self.listenerThread = Thread(target = self.listener)
+		# self.transmitterThread = Thread(target = self.transmitter) 
+		
+		try:
+			self.connect((host, port)) # establish connection to server
+			welcome_message = self.recv(1024).decode("utf-8")
+			print(welcome_message)
+		
+		except Exception:
+			pass
 
-		self.listenerThread.start()
-		self.transmitterThread.start()
+		# self.listenerThread.start()
+		# self.transmitterThread.start()
 	
 	def listener(self):
 		"""Ta funkcja czeka na wiadomość od drugiego klienta za pomocą serwera"""
 		
 		while True:
-			data = self.recv(1024).decode("utf-8")
-			if not data:
-				from sys import exit
-				exit()
-			print("Recieved from server: " + data)
+			try:
+				data = self.recv(1024).decode("utf-8")
+				if not data:
+					from sys import exit
+					exit()
+				print("Recieved from server: " + data)
+			except Exception:
+				pass
 
-	def transmitter(self): # add paramenter data instead of local var message (data will be json)
+	def send_data(self, payload): 
 		"""Ta funkcja wysyła wiadomość do drugiego klienta za pomocą serwera"""
 
-		while True:
-			message = input("-> ")
-			self.sendall(message.encode("utf-8"))
-		self.close()
+		data = self.serialize(payload)
+		self.sendall(data.encode("utf-8"))
 
-	def serialize(self):
+	def serialize(self, payload):
 		"""Zamienia pythonowe obiekty na json"""
-		return json.dumps(self.payload)
+		return json.dumps(payload)
 
 	def deserialize(self):
 		"""Zamienia json obiekty na python"""
 		return json.loads(self.recieved_payload)
 
+	def activate_listner_thread(self):
+		"""Włącza listener funkcje jako thread"""
+		self.listenerThread.start()
 
-# a = GameClient(host, port)
+a = GameClient(host, port)
+
+
+
 
 
 
