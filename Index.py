@@ -142,9 +142,10 @@ class Game:
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     mouse = pygame.mouse.get_pos()
-                    clicked = self.dev.wasclicked(mouse)
+                    clicked_dev = self.dev.wasclicked(mouse)
                     self.ipscreen.check_if_pressed(mouse)
-                    if clicked:
+                    self.ip = self.ipscreen.enter_button_pressed(mouse)
+                    if clicked_dev or self.ip:
                         waiting = False
 
             self.ipscreen.draw_input_box()

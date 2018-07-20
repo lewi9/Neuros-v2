@@ -83,6 +83,13 @@ class IpInput:
             button.set_text_size(25)
             button.create()
 
+        self.buttonBackSpace = Button(self.screen, 543, 280, 190, 90)
+        self.buttonBackSpace.set_button_color(CYAN)
+        self.buttonBackSpace.set_text("BACK SPACE")
+        self.buttonBackSpace.set_text_color(BLACK)
+        self.buttonBackSpace.set_text_size(30)
+        self.buttonBackSpace.create()
+
     def check_if_pressed(self, cords):
         """This function will check if any button is pressed and modify the IP"""
 
@@ -119,8 +126,13 @@ class IpInput:
         if self.buttondot.wasclicked(cords):
             self.ip += "."
 
+        if self.buttonBackSpace.wasclicked(cords):
+            self.ip = self.ip[:-1]
+
+    def enter_button_pressed(self, cords):
         if self.buttonEnter.wasclicked(cords):
-            print(self.ip)
+            return self.ip
+
 
 
 
