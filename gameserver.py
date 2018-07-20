@@ -1,11 +1,11 @@
 import socket
-import threading 
+import multiprocessing 
 from Settings import PORT
 
 class GameInstanceServer:
     """Ta klasa jest instancją gry pomiędzy dwoma graczami. Zajmuję się komunikcją klientów"""
 
-    class RequestHandler(threading.Thread):
+    class RequestHandler(multiprocessing.Process):
         """Ta klasa jest komunikatorem każdego klienta"""
         def __init__(self, client, other_client):
             self.client = client
@@ -24,6 +24,7 @@ class GameInstanceServer:
                 print("Sending: " + data)
                 other_client.sendall(data.encode("utf-8"))
 
+            client.shutdown(socket.SHUT_WR)
             client.close()
 
     def __init__(self, client1, client2):
@@ -40,7 +41,12 @@ class ManageGames(socket.socket):
         super().__init__(socket.AF_INET, socket.SOCK_STREAM) # TCP
         
         self.localhost = localhost
-        self.server_address = self.getMyIP_and_Port() # address tego serwer'u
+        
+        try:
+            self.server_address = self.getMyIP_and_Port() # address tego serwer'u
+        except Exception as e:
+            print(e)
+
         self.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) # bez tego jest error
         
         if self.localhost:
@@ -67,6 +73,7 @@ class ManageGames(socket.socket):
         s.connect(("8.8.8.8", 80))
         ip_addr = s.getsockname()[0]
         port = s.getsockname()[1]
+        s.shutdown(socket.SHUT_WR)
         s.close()
         return (ip_addr, port)
 

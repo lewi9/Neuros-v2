@@ -8,6 +8,7 @@
 
 import pygame, sys
 import threading
+import socket
 from random import shuffle
 
 #I will import my modules
@@ -22,7 +23,6 @@ from base_of_card import *
 from deck import Deck
 from random import shuffle
 from gameclient import GameClient
-
 
 
 class Game:  
@@ -40,9 +40,12 @@ class Game:
             
     def new(self):
         # start a new game
-        self.thread_run = threading.Thread(target = self.run)
+        # run_thread = threading.Thread(target = self.run)
+        # run_thread.start()
+                        
+        self.connect_to_server()# ip = self.ip)
         self.run()
-
+        
     def run(self):
         # Gameloop      
         self.playing = True
@@ -51,7 +54,12 @@ class Game:
             self.events()
             self.update()
             self.draw()
-                  
+
+        self.connection.listening = False
+        self.connection.shutdown(socket.SHUT_WR)
+        self.connection.close()
+        self.connection.listenerThread.terminate()
+
     def update(self):
         # Gameloop - Update
         pass
@@ -70,7 +78,7 @@ class Game:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse = pygame.mouse.get_pos()
                 clicked = wasclicked(mouse)
-                
+
                 if clicked:
                     self.connection.send_data("Hey There :D")
 
@@ -142,16 +150,17 @@ class Game:
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    waiting = False
-                    self.running = False
+                    pygame.quit()
+                    sys.exit()
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     mouse = pygame.mouse.get_pos()
                     clicked_dev = self.dev.wasclicked(mouse)
+
                     self.ipscreen.check_if_pressed(mouse)
                     self.ip = self.ipscreen.enter_button_pressed(mouse)
+
                     if clicked_dev or self.ip:
-                        self.connect_to_server()# ip = self.ip)
                         waiting = False
 
             self.ipscreen.draw_input_box()
@@ -161,19 +170,18 @@ class Game:
     def connect_to_server(self, ip = "localhost", port = PORT):
         # Connect to server
         self.connection = GameClient(ip, port)
-    
-    
+
+
 g = Game()
-g.show_start_screen()
 
 while g.running:
+    g.show_start_screen()
     g.new()
     g.game_over_screen()
     
 pygame.quit()
 
-            
-         
+
     
     
     

@@ -1,6 +1,6 @@
 import socket
 import json
-from threading import Thread
+from multiprocessing import Process
 from Settings import PORT
 
 class GameClient(socket.socket):
@@ -8,40 +8,49 @@ class GameClient(socket.socket):
 
     def __init__(self, host, port): # param payload (dict)
         """Ta funkcja inicjalizuję tą klase"""
-        self.host = "0.0.0.0"
+        self.host = host
         self.port = port
+        self.listening = True
+
         super().__init__(socket.AF_INET, socket.SOCK_STREAM) # init parent class
+        self.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         
-        self.listenerThread = Thread(target = self.listener)
-        # self.transmitterThread = Thread(target = self.transmitter) 
+        self.listenerThread = Process(target = self.listener)
         
         try:
             self.connect((self.host, self.port)) # establish connection to server
             welcome_message = self.recv(1024).decode("utf-8")
             print(welcome_message)
         
-        except Exception:
-            print("Falied to connect")
+        except Exception as e: 
+            print(e)
 
         self.listenerThread.start()
-        # self.transmitterThread.start()
-    
+
     def listener(self):
         """Ta funkcja czeka na wiadomość od drugiego klienta za pomocą serwera"""
-        
-        while True:
+
+        while self.listening:
             try:
                 data = self.recv(1024).decode("utf-8")
                 if not data:
-                    from sys import exit
-                    exit()
+                    self.listening = False
+                    try:
+                        self.shutdown(socket.SHUT_WR)
+                        self.close()
+                    except OSError:
+                        pass
+                    
                 print("Recieved from server: " + data)
-            except Exception:
-                pass 
+
+            except Exception as e:
+                print(e)
+                self.listening = False
+                self.shutdown(socket.SHUT_WR)
+                self.close()
 
     def send_data(self, payload): 
         """Ta funkcja wysyła wiadomość do drugiego klienta za pomocą serwera"""
-
         data = self.serialize(payload)
         self.sendall(data.encode("utf-8"))
 
@@ -52,14 +61,6 @@ class GameClient(socket.socket):
     def deserialize(self):
         """Zamienia json obiekty na python"""
         return json.loads(self.recieved_payload)
-
-    def activate_listner_thread(self):
-        """Włącza listener funkcje jako thread"""
-        self.listenerThread.start()
-
-
-
-
 
 
 
