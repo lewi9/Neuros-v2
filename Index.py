@@ -7,6 +7,7 @@
 #So i will import Pygame and sys
 
 import pygame, sys
+import threading
 from random import shuffle
 
 #I will import my modules
@@ -20,6 +21,7 @@ from card import Card
 from base_of_card import *
 from deck import Deck
 from random import shuffle
+from gameclient import GameClient
 
 
 
@@ -38,6 +40,7 @@ class Game:
             
     def new(self):
         # start a new game
+        self.thread_run = threading.Thread(target = self.run)
         self.run()
 
     def run(self):
@@ -67,8 +70,10 @@ class Game:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse = pygame.mouse.get_pos()
                 clicked = wasclicked(mouse)
+                
                 if clicked:
-                    print("yay it works :D")
+                    self.connection.send_data("Hey There :D")
+
                 if self.end_turn.wasclicked(mouse):
                     print("Now is your enemies turn")
 
@@ -81,7 +86,7 @@ class Game:
         self.drawer.draw_board()
 
         #jest tylko testowy jeżeli przeszkadza to ta funkcja jest w client_test_button.py
-        #draw_test_button(self.screen)
+        draw_test_button(self.screen)
         
         #This is End Turn Button
         self.end_turn = Button(self.screen, card_viev_left_x, down_deck_up_y, 210, heightcard)
@@ -146,15 +151,16 @@ class Game:
                     self.ipscreen.check_if_pressed(mouse)
                     self.ip = self.ipscreen.enter_button_pressed(mouse)
                     if clicked_dev or self.ip:
+                        self.connect_to_server()# ip = self.ip)
                         waiting = False
 
             self.ipscreen.draw_input_box()
             self.ipscreen.draw_ip_text()
             pygame.display.update()
                         
-    def connect_to_server(self):
+    def connect_to_server(self, ip = "localhost", port = PORT):
         # Connect to server
-        pass
+        self.connection = GameClient(ip, port)
     
     
 g = Game()

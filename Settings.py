@@ -1,6 +1,6 @@
 FPS = 30
 
-PORT = 80 
+PORT = 5000 
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)

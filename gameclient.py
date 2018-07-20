@@ -8,21 +8,22 @@ class GameClient(socket.socket):
 
     def __init__(self, host, port): # param payload (dict)
         """Ta funkcja inicjalizuję tą klase"""
-
+        self.host = "0.0.0.0"
+        self.port = port
         super().__init__(socket.AF_INET, socket.SOCK_STREAM) # init parent class
         
         self.listenerThread = Thread(target = self.listener)
         # self.transmitterThread = Thread(target = self.transmitter) 
         
         try:
-            self.connect((host, port)) # establish connection to server
+            self.connect((self.host, self.port)) # establish connection to server
             welcome_message = self.recv(1024).decode("utf-8")
             print(welcome_message)
         
         except Exception:
-            pass
+            print("Falied to connect")
 
-        # self.listenerThread.start()
+        self.listenerThread.start()
         # self.transmitterThread.start()
     
     def listener(self):
@@ -36,7 +37,7 @@ class GameClient(socket.socket):
                     exit()
                 print("Recieved from server: " + data)
             except Exception:
-                pass
+                pass 
 
     def send_data(self, payload): 
         """Ta funkcja wysyła wiadomość do drugiego klienta za pomocą serwera"""
