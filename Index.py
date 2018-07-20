@@ -18,6 +18,8 @@ from enter_ip import IpInput
 from MakeButton import Button 
 from card import Card
 from base_of_card import *
+from deck import Deck
+from random import shuffle
 
 
 
@@ -102,7 +104,16 @@ class Game:
         self.wait_for_user()
 
         #Test działania
-        print(list_of_card[5].attack)
+        #Nie wiem gdzie normalnie powinien znaleźc się ten framgent kodu z shuffle
+        #Napisz mi na FB, czy Hand to ma być osobna klasa, lista czy jak? Jeśli lista to gdzie
+        #zdefiniowana i jak ją potem imporotwać do klasy?
+        talia = Deck()
+        talia.fill_base()
+        for i in range(10):
+            shuffle(talia.deck)
+            print(talia.deck[1].attack)
+
+        
 
 
     def game_over_screen(self):
