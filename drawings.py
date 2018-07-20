@@ -6,6 +6,7 @@ import init_dimensions
 from Settings import *
 
 
+
 #import varbiables
 left_x_list = init_dimensions.left_x_list
 up_y_list = init_dimensions.up_y_list
@@ -38,8 +39,10 @@ class DrawObjects:
         texture = pygame.Rect(init_dimensions.card_viev_left_x, init_dimensions.card_view_up_y, 210, 300)    
         pygame.draw.rect(self.screen, DECK_LINE_COLOR, texture)
         
-        self.draw_square((0,0,0), init_dimensions.card_viev_left_x, 600, 210, 50)
-        self.draw_text("END TURN", 30, CYAN, 690, 625 )
+        #self.draw_square((0,0,0), init_dimensions.card_viev_left_x, 600, 210, 50)
+        #self.draw_text("END TURN", 30, CYAN, 690, 625 )
+
+
 
 
 

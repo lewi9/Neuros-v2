@@ -69,6 +69,8 @@ class Game:
                 clicked = wasclicked(mouse)
                 if clicked:
                     print("yay it works :D")
+                if self.end_turn.wasclicked(mouse):
+                    print("Now is your enemies turn")
 
 
     def draw(self):
@@ -79,7 +81,15 @@ class Game:
         self.drawer.draw_board()
 
         #jest tylko testowy jeżeli przeszkadza to ta funkcja jest w client_test_button.py
-        draw_test_button(self.screen)
+        #draw_test_button(self.screen)
+        
+        #This is End Turn Button
+        self.end_turn = Button(self.screen, card_viev_left_x, down_deck_up_y, 210, heightcard)
+        self.end_turn.set_text("END TURN")
+        self.end_turn.set_text_color(CYAN)
+        self.end_turn.set_button_color(BLACK)
+        self.end_turn.set_text_size(30)
+        self.end_turn.create()
            
         pygame.display.flip()
     
@@ -105,13 +115,13 @@ class Game:
 
         #Test działania
         #Nie wiem gdzie normalnie powinien znaleźc się ten framgent kodu z shuffle
-        #Napisz mi na FB, czy Hand to ma być osobna klasa, lista czy jak? Jeśli lista to gdzie
-        #zdefiniowana i jak ją potem imporotwać do klasy?
+        #Napisz mi na FB, czy Hand to ma być osobna klasa, lista czy jak? Jeśli lista to gdzie zdefiniowana?
+        
         talia = Deck()
         talia.fill_base()
+        shuffle(talia.deck)
         for i in range(10):
-            shuffle(talia.deck)
-            print(talia.deck[1].attack)
+            print(talia.deck[i].hp)
 
         
 
