@@ -95,39 +95,63 @@ class IpInput:
 
         if self.button1.wasclicked(cords):
             self.ip += "1"
+            self.button1.set_button_color(RED)
+            self.button1.create()
 
         if self.button2.wasclicked(cords):
             self.ip += "2"
+            self.button2.set_button_color(RED)
+            self.button2.create()
 
         if self.button3.wasclicked(cords):
             self.ip += "3"
+            self.button3.set_button_color(RED)
+            self.button3.create()
 
         if self.button4.wasclicked(cords):
             self.ip += "4"
+            self.button4.set_button_color(RED)
+            self.button4.create()
 
         if self.button5.wasclicked(cords):
             self.ip += "5"
+            self.button5.set_button_color(RED)
+            self.button5.create()
 
         if self.button6.wasclicked(cords):
             self.ip += "6"
+            self.button6.set_button_color(RED)
+            self.button6.create()
 
         if self.button7.wasclicked(cords):
             self.ip += "7"
+            self.button7.set_button_color(RED)
+            self.button7.create()
 
         if self.button8.wasclicked(cords):
             self.ip += "8"
+            self.button8.set_button_color(RED)
+            self.button8.create()
 
         if self.button9.wasclicked(cords):
             self.ip += "9"
+            self.button9.set_button_color(RED)
+            self.button9.create()
 
         if self.button0.wasclicked(cords):
             self.ip += "0"
+            self.button0.set_button_color(RED)
+            self.button0.create()
 
         if self.buttondot.wasclicked(cords):
             self.ip += "."
+            self.buttondot.set_button_color(RED)
+            self.buttondot.create()
 
         if self.buttonBackSpace.wasclicked(cords):
             self.ip = self.ip[:-1]
+            self.buttonBackSpace.set_button_color(RED)
+            self.buttonBackSpace.create()
 
     def enter_button_pressed(self, cords):
         if self.buttonEnter.wasclicked(cords):
