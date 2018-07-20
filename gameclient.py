@@ -46,8 +46,11 @@ class GameClient(socket.socket):
             except Exception as e:
                 print(e)
                 self.listening = False
-                self.shutdown(socket.SHUT_WR)
-                self.close()
+                try:
+                    self.shutdown(socket.SHUT_WR)
+                    self.close()
+                except OSError:
+                    pass
 
     def send_data(self, payload): 
         """Ta funkcja wysyła wiadomość do drugiego klienta za pomocą serwera"""

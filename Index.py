@@ -55,10 +55,13 @@ class Game:
             self.update()
             self.draw()
 
-        self.connection.listening = False
-        self.connection.shutdown(socket.SHUT_WR)
-        self.connection.close()
-        self.connection.listenerThread.terminate()
+        try:
+            self.connection.listening = False
+            self.connection.shutdown(socket.SHUT_WR)
+            self.connection.close()
+            self.connection.listenerThread.terminate()
+        except OSError:
+            pass
 
     def update(self):
         # Gameloop - Update
@@ -147,6 +150,7 @@ class Game:
         waiting = True
         while waiting:
             self.clock.tick(FPS)
+            # self.ipscreen.createButtons()
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -163,6 +167,7 @@ class Game:
                     if clicked_dev or self.ip:
                         waiting = False
 
+            self.ipscreen.button1.set_button_color(RED)
             self.ipscreen.draw_input_box()
             self.ipscreen.draw_ip_text()
             pygame.display.update()
