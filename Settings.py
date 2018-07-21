@@ -1,3 +1,5 @@
+import pygame
+
 FPS = 30
 
 PORT = 5000 
@@ -23,3 +25,8 @@ PLACE_FOR_CARD_COLOR = [
     (181, 254, 249),
     (168, 135, 126)
 ]
+
+hero = pygame.image.load("graphics/hero.jpg")
+yhero = pygame.image.load("graphics/yhero.jpg")
+big_hero = pygame.image.load("graphics/big_hero.jpg")
+big_yhero = pygame.image.load("graphics/big_yhero.jpg")

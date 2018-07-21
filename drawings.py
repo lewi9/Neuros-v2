@@ -2,21 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import pygame, sys
-import init_dimensions
+from init_dimensions import *
 from Settings import *
-
-
-
-#import varbiables
-left_x_list = init_dimensions.left_x_list
-up_y_list = init_dimensions.up_y_list
-widthcard = init_dimensions.widthcard
-heightcard = init_dimensions.heightcard
-up_deck_list_left_x = init_dimensions.up_deck_list_left_x
-up_deck_up_y = init_dimensions.up_deck_up_y
-down_deck_list_left_x = init_dimensions.down_deck_list_left_x
-down_deck_up_y = init_dimensions.down_deck_up_y
-
 
 class DrawObjects:
     """Ta klasa służy do ułatwienia rysowania obiektów"""
@@ -36,11 +23,12 @@ class DrawObjects:
             pygame.draw.rect(self.screen, DECK_LINE_COLOR, texture)
             texture = pygame.Rect(down_deck_list_left_x[i], down_deck_up_y, widthcard, heightcard)
             pygame.draw.rect(self.screen, DECK_LINE_COLOR, texture)
-        texture = pygame.Rect(init_dimensions.card_viev_left_x, init_dimensions.card_view_up_y, 210, 300)    
+        texture = pygame.Rect(card_viev_left_x, card_view_up_y, 210, 300)    
         pygame.draw.rect(self.screen, DECK_LINE_COLOR, texture)
         
-        #self.draw_square((0,0,0), init_dimensions.card_viev_left_x, 600, 210, 50)
-        #self.draw_text("END TURN", 30, CYAN, 690, 625 )
+
+        self.screen.blit(hero, (up_deck_list_left_x[1], up_deck_up_y))
+        self.screen.blit(yhero, (down_deck_list_left_x[1], down_deck_up_y))
 
 
 

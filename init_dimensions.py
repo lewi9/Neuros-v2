@@ -11,7 +11,9 @@ widthmargin = onewidhtunit * 2
 heightmargin = oneheightunit
 bigheightmargin = oneheightunit * 5
  
+#44
 widthcard =  onewidhtunit * 7
+#60
 heightcard =  oneheightunit * 10
 
 x=0
