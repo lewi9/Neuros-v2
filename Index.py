@@ -43,6 +43,9 @@ class Game:
         # run_thread.start()
                         
         self.connect_to_server()# ip = self.ip)
+        self.player.fill_deck()
+        self.player.shuffle_deck()
+        self.player.prepare_hand()
         self.draw()
         self.run()
         
@@ -148,32 +151,7 @@ class Game:
         pygame.display.flip()
         self.wait_for_user()
 
-        #Test 
 
-        #Player method test
-        self.player.fill_deck()
-        print("Shuffle test and prepare hand test")
-        self.player.shuffle_deck()
-        for i in range (10):
-            print(self.player.deck[i])
-        self.player.prepare_hand()
-        print("deck")
-        for i in range (10):
-            print(self.player.deck[i])
-        print("hand")
-        for i in range (len(self.player.hand)):
-            print(self.player.hand[i])
-
-        #Draw card test
-        print("Draw Card Test")
-        print("Card before drawing", self.player.deck[0])
-        self.player.draw_card()
-        last_card = len(self.player.hand)
-        print("Drawed Card", self.player.hand[last_card-1])
-        print("Card in the first position in deck after drawing", self.player.deck[0])
-
-
-        print(widthcard, heightcard)
     def game_over_screen(self):
         # Loads the game over screen
         pass

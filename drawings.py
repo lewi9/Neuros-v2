@@ -4,12 +4,17 @@
 import pygame, sys
 from init_dimensions import *
 from Settings import *
+from card import Card
+from player import Player
+from base_of_card import *
 
 class DrawObjects:
     """Ta klasa służy do ułatwienia rysowania obiektów"""
 
-    def __init__(self, screen):
+    def __init__(self, screen, hand_area = 0):
         self.screen = screen
+        self.player = Player()
+        self.hand_area = hand_area
 
     def draw_board(self):
         """Draw the playing arena"""
@@ -30,9 +35,12 @@ class DrawObjects:
         self.screen.blit(hero, (up_deck_list_left_x[1], up_deck_up_y))
         self.screen.blit(yhero, (down_deck_list_left_x[1], down_deck_up_y))
 
+    def draw_hand(self):
+        #In building - don't move it!
+        self.hand_area = WIDTHSCREEN - widthmargin*6
 
-
-
+        for i in range(len(self.player.hand)):
+            pass
 
     def draw_text(self, text, size, color, x, y):
         """This draws a text in pygame. The x and y is the center of the text"""
