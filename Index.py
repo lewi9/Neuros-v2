@@ -5,6 +5,8 @@
 #I will write all parts of program in one file and 
 #I hope that you will put this program into modules and make order
 
+#Dziękujemy Czajce, że pomógł mi odkryć błąd w idei tworzenia obiektów klasy Card oraz zasugerował inne miniaturki
+
 #So i will import Pygame and sys
 
 import pygame, sys
@@ -47,17 +49,18 @@ class Game:
         self.player.shuffle_deck()
         self.player.prepare_hand()
         self.draw()
-        
+        self.drawer.draw_hand()
         self.run()
         
     def run(self):
         # Gameloop      
         self.playing = True
         while self.playing:
-            self.drawer.draw_hand()
+
+            self.update()
             self.clock.tick(FPS)
             self.events()
-            self.update()
+            
 
             #Przeniosłem to do def new(self): bo mi przeszkadzało
 
@@ -73,7 +76,7 @@ class Game:
 
     def update(self):
         # Gameloop - Update
-        pass
+        self.drawer.draw_hand()
 
     def events(self):
         # Gameloop - Events
@@ -94,6 +97,7 @@ class Game:
                     #self.connection.send_data("Hey There :D")
                     self.player.draw_card()
                     print(len(self.player.deck))
+                    self.update()
 
                 if self.end_turn.wasclicked(mouse):
                     print("Now is your enemies turn")
@@ -102,7 +106,7 @@ class Game:
                     print(data)
 
             position = pygame.mouse.get_pos()
-
+            self.drawer.draw_right_from_hand()
 
             #Obrazki!
             if position[0] > up_deck_list_left_x[1] and position[0] < up_deck_list_right_x[1]:

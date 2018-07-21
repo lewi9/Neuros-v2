@@ -30,7 +30,7 @@ class Player:
             self.deck.pop(0)
         else:
             print("You haven't more cards in deck")
-    
+
 
     #Nie miałem pomysłu jak to zrobić
     def player_data(self):

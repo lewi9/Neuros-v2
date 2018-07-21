@@ -17,4 +17,5 @@ class Card:
     def double_hp(self):
         self.hp = self.hp*2
 
+
     

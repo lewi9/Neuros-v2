@@ -63,6 +63,23 @@ class DrawObjects:
             self.screen.blit(self.player.hand[i].image, (self.hand_list_of_left_x[i], self.hand_up_y))
             pygame.display.flip()
 
+    def draw_right_from_hand(self):
+        position = pygame.mouse.get_pos()
+        if self.hand_list_of_left_x[2] > self.hand_list_of_right_x[1]:
+            for i in range(len(self.player.hand)-2):
+                if position[0] > self.hand_list_of_left_x[i] and position[0] < self.hand_list_of_left_x[i+1]:
+                    if position[1] < self.hand_down_y and position[1] > self.hand_up_y:
+                        self.screen.blit(self.player.hand[i].big_image, (card_viev_left_x, card_view_up_y))
+            last = len(self.player.hand-1)
+            if position[0] > self.hand_list_of_left_x[last] and position[0] < self.hand_list_of_right_x[last]:
+                 if position[1] < self.hand_down_y and position[1] > self.hand_up_y:   
+                       self.screen.blit(self.player.hand[i].big_image, (card_viev_left_x, card_view_up_y))         
+        else:
+            for i in range(len(self.player.hand)-1):
+                if position[0] > self.hand_list_of_left_x[i] and position[0] < self.hand_list_of_right_x[i]:
+                    if position[1] < self.hand_down_y and position[1] > self.hand_up_y:
+                        self.screen.blit(self.player.hand[i].big_image, (card_viev_left_x, card_view_up_y))
+
             
 
     def draw_text(self, text, size, color, x, y):
