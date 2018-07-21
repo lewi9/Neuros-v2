@@ -1,63 +1,64 @@
 from card import *
 import pygame
-
+color_cards = ["_c", "_d", "_s", "_h"]
 
 #Celowo nie użyłem for, ponieważ to baza kart i musi być łatwa zmiana statystyk
 #Wiem, że byłoby szybciej, ale potem mogłoby być nieczytelne, a to jest bardzo ważne miejsce
 
 #define nine card
-nine = Card("9",9,9,1)
-nine.image = pygame.image.load("graphics/9.png")
-nine.big_image = pygame.image.load("graphics/big_9.png")
 
-#define 2 card
-two = Card("2",2,2,1)
-two.image = pygame.image.load("graphics/2.jpg")
-two.big_image = pygame.image.load("graphics/big_2.jpg")
-#define 3 card
-three = Card("3",3,3,0)
-three.image = pygame.image.load("graphics/3.png")
-three.big_image = pygame.image.load("graphics/big_3.png")
-#define 4 card
-four= Card("4",4,4,1)
-four.image = pygame.image.load("graphics/4.png")
-four.big_image = pygame.image.load("graphics/big_4.png")
-#define 5 card
-five= Card("5",5,5,0)
-five.image = pygame.image.load("graphics/5.png")
-five.big_image = pygame.image.load("graphics/big_5.png")
-#define 6 card
-six= Card("6",6,6,1)
-six.image = pygame.image.load("graphics/6.png")
-six.big_image = pygame.image.load("graphics/big_6.png")
-#define 7 card
-seven= Card("7",7,7,1)
-seven.image = pygame.image.load("graphics/7.png")
-seven.big_image = pygame.image.load("graphics/big_7.png")
-#define 8 card
-eight= Card("8",8,8,1)
-eight.image = pygame.image.load("graphics/8.png")
-eight.big_image = pygame.image.load("graphics/big_8.png")
-#define 10 card
-ten= Card("10",10,10,1)
-ten.image = pygame.image.load("graphics/10.png")
-ten.big_image = pygame.image.load("graphics/big_10.png")
-#define jack
-jack= Card("J",2,11,1)
-jack.image = pygame.image.load("graphics/j.png")
-jack.big_image = pygame.image.load("graphics/big_j.png")
-#define queen
-queen= Card("Q",12,12,1)
-queen.image = pygame.image.load("graphics/q.png")
-queen.big_image = pygame.image.load("graphics/big_q.png")
-#define king
-king= Card("K",13,13,2)
-king.image = pygame.image.load("graphics/k.png")
-king.big_image = pygame.image.load("graphics/big_k.png")
-#define ace = card()
-ace = Card("A",14,14,1)
-ace.image = pygame.image.load("graphics/a.png")
-ace.big_image = pygame.image.load("graphics/big_a.png")
+nine = []
+for i in range(4):
+    nine.append(Card("9" + color_cards[i], 9, 9, 1 , pygame.image.load("graphics/9.png"), pygame.image.load("graphics/big_9.png"))) 
+
+two = []
+for i in range(4):
+    two.append(Card("2" + color_cards[i], 2, 2, 1 , pygame.image.load("graphics/2.jpg"), pygame.image.load("graphics/big_2.jpg"))) 
+
+three = []
+for i in range(4):
+    three.append(Card("3" + color_cards[i], 3, 3, 0 , pygame.image.load("graphics/3.png"), pygame.image.load("graphics/big_3.png"))) 
+
+four = []
+for i in range(4):
+    four.append(Card("4" + color_cards[i], 4, 4, 1 , pygame.image.load("graphics/4.png"), pygame.image.load("graphics/big_4.png"))) 
+
+five = []
+for i in range(4):
+    five.append(Card("5" + color_cards[i], 5, 5, 0 , pygame.image.load("graphics/5.png"), pygame.image.load("graphics/big_5.png"))) 
+
+six = []
+for i in range(4):
+    six.append(Card("6" + color_cards[i], 6, 6, 1 , pygame.image.load("graphics/6.png"), pygame.image.load("graphics/big_6.png"))) 
+
+seven = []
+for i in range(4):
+    seven.append(Card("7" + color_cards[i], 7, 7, 1 , pygame.image.load("graphics/7.png"), pygame.image.load("graphics/big_7.png"))) 
+
+eight = []
+for i in range(4):
+    eight.append(Card("8" + color_cards[i], 8, 8, 1 , pygame.image.load("graphics/8.png"), pygame.image.load("graphics/big_8.png"))) 
+
+ten = []
+for i in range(4):
+    ten.append(Card("10" + color_cards[i], 10, 10, 1 , pygame.image.load("graphics/10.png"), pygame.image.load("graphics/big_10.png"))) 
+
+jack = []
+for i in range(4):
+    jack.append(Card("j" + color_cards[i], 2, 11, 1 , pygame.image.load("graphics/j.png"), pygame.image.load("graphics/big_j.png"))) 
+
+queen = []
+for i in range(4):
+    queen.append(Card("9" + color_cards[i], 12, 12, 1 , pygame.image.load("graphics/q.png"), pygame.image.load("graphics/big_q.png"))) 
+
+king = []
+for i in range(4):
+    king.append(Card("9" + color_cards[i], 13, 13, 2 , pygame.image.load("graphics/k.png"), pygame.image.load("graphics/big_k.png"))) 
+
+ace = []
+for i in range(4):
+    ace.append(Card("9" + color_cards[i], 14, 14, 1 , pygame.image.load("graphics/a.png"), pygame.image.load("graphics/big_a.png"))) 
+
 
 list_of_card = [
     two, 

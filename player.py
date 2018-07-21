@@ -14,7 +14,7 @@ class Player:
     def fill_deck(self):
         for i in range(13):
             for ii in range(4):
-                self.deck.append(list_of_card[i])
+                self.deck.append(list_of_card[i][ii])
     
     def shuffle_deck(self):
         shuffle(self.deck)
