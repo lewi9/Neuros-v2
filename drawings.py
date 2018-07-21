@@ -11,10 +11,23 @@ from base_of_card import *
 class DrawObjects:
     """Ta klasa służy do ułatwienia rysowania obiektów"""
 
-    def __init__(self, screen, hand_area = 0):
+    def __init__(
+    self, 
+    screen, 
+    hand_area = 0,
+    hand_list_of_left_x = [],
+    hand_list_of_right_x = [], 
+    hand_up_y = 0,
+    hand_down_y = 0,
+    beetwen_card = 0):
         self.screen = screen
         self.player = Player()
         self.hand_area = hand_area
+        self.hand_list_of_left_x = hand_list_of_left_x
+        self.hand_list_of_right_x = hand_list_of_right_x
+        self.hand_up_y = hand_up_y
+        self.hand_down_y = hand_down_y
+        self.beetwen_card = beetwen_card
 
     def draw_board(self):
         """Draw the playing arena"""
@@ -34,13 +47,21 @@ class DrawObjects:
 
         self.screen.blit(hero, (up_deck_list_left_x[1], up_deck_up_y))
         self.screen.blit(yhero, (down_deck_list_left_x[1], down_deck_up_y))
+        self.screen.blit(deck_image, (up_deck_list_left_x[0], up_deck_up_y))
+        self.screen.blit(deck_image, (down_deck_list_left_x[0], down_deck_up_y))
 
     def draw_hand(self):
-        #In building - don't move it!
         self.hand_area = WIDTHSCREEN - widthmargin*6
+        self.beetwen_card = self.hand_area / len(self.player.hand)
+        self.hand_up_y = y + (heightmargin*9) + (heightcard*9) + bigheightmargin
+        self.hand_down_y = y + (heightmargin*9) + (heightcard*10) + bigheightmargin
+        for i in range(len(self.player.hand)-1):
+            self.hand_list_of_left_x.append(widthmargin*3 + self.beetwen_card * i)
+            self.hand_list_of_right_x.append(self.hand_list_of_left_x[i] + widthcard)
+            self.screen.blit(self.player.hand[i].image, (self.hand_list_of_left_x[i], self.hand_up_y))
+            pygame.display.flip()
 
-        for i in range(len(self.player.hand)):
-            pass
+            
 
     def draw_text(self, text, size, color, x, y):
         """This draws a text in pygame. The x and y is the center of the text"""
