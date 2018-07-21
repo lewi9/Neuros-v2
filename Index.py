@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+
 #I will write all parts of program in one file and 
 #I hope that you will put this program into modules and make order
 
@@ -97,6 +98,8 @@ class Game:
 
             position = pygame.mouse.get_pos()
 
+
+            #Obrazki!
             if position[0] > up_deck_list_left_x[1] and position[0] < up_deck_list_right_x[1]:
                 if position[1] < up_deck_down_y and position[1] > up_deck_up_y:
                     self.screen.blit(big_hero, (card_viev_left_x, card_view_up_y))
