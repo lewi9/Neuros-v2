@@ -48,14 +48,14 @@ class Game:
         self.player.prepare_hand()
         print(self.player.hand[1])
         self.draw()
-        self.drawer.draw_hand()
+        
         self.run()
         
     def run(self):
         # Gameloop      
         self.playing = True
         while self.playing:
-            
+            self.drawer.draw_hand()
             self.clock.tick(FPS)
             self.events()
             self.update()

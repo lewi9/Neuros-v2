@@ -51,6 +51,8 @@ class DrawObjects:
         self.screen.blit(deck_image, (down_deck_list_left_x[0], down_deck_up_y))
 
     def draw_hand(self):
+        self.hand_list_of_left_x = []
+        self.hand_list_of_right_x = []
         self.hand_area = WIDTHSCREEN - widthmargin*6
         self.beetwen_card = self.hand_area / len(self.player.hand)
         self.hand_up_y = y + (heightmargin*9) + (heightcard*9) + bigheightmargin
