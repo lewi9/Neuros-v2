@@ -5,6 +5,7 @@ from random import shuffle
 class Player:
     
     def __init__ (self, deck = [], hand = [], data = {}, my_turn = False, graveyard = []):
+        self.player_name = ""
         self.deck = deck
         self.hand = hand
         self.data = data
@@ -34,20 +35,41 @@ class Player:
 
     #Nie miałem pomysłu jak to zrobić
     def player_data(self):
-        self.data = {
+        deck_info = {}
+        hand_info = {}
+        graveyard_info = {}
+
+        data = {
+            "player_name" : self.player_name,
             "myTurn" : self.my_turn,
-            "deck" : self.deck,
-            "hand" : self.hand,
-            "graveyard" : self.graveyard
         }
 
-        return self.data
+        for card in self.deck:
+            card_info = card.get_data()
+            deck_info[card_info["name"]] = card_info
+            data["deck"] = deck_info
+
+        for card in self.hand:
+            card_info = card.get_data()
+            hand_info[card_info["name"]] = card_info
+            data["hand"] = hand_info
+
+        for card in self.graveyard:
+            card_info = card.get_data()
+            hand_info[card_info["name"]] = card_info
+            data["graveyard"] = hand_info
+
+        return data
+
+    def set_player_name(self, name):
+        self.player_name = name
 
     def end_turn(self):
         self.my_turn = False
 
     def start_turn(self):
         self.my_turn = True
+
 
 
 

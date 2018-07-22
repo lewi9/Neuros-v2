@@ -67,27 +67,3 @@ class GameClient(socket.socket):
         """Zamienia json obiekty na python"""
         return json.loads(payload)
 
-
-class Data:
-    """This is a class that prepares data to be sent"""
-    def __init__(self):
-        self.data = {}
-
-    def __getitem__(self, key):
-        return self.data[key]
-
-    def add_data(self, key, info):
-        self.data[key] = info
-
-    def delete_data(self, key):
-        del self.data[key]
-
-# d = Data()
-# d.add_data("a", [1, 2, 3])
-# d.add_data("b", "BBBB")
-
-# print(d["a"])
-
-
-
-

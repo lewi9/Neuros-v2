@@ -11,6 +11,16 @@ class Card:
     def __str__(self):
         return self.name
 
+    def get_data(self):
+        card_info = {
+            "name" : self.name,
+            "atk" : self.attack,
+            "hp" : self.hp,
+            "frozen_time" : self.frozen_time,
+        }
+
+        return card_info
+
     def double_attack(self):
         self.attack = self.attack*2
 

@@ -23,7 +23,7 @@ from MakeButton import Button
 from card import Card
 from base_of_card import *
 from player import Player
-from gameclient import GameClient
+from gameclient import GameClient, Data
 
 
 class Game:  
@@ -36,7 +36,9 @@ class Game:
 
         self.running = True 
         self.player = Player()
-        self.game_data = "Hello There :D"#self.player.player_data()
+        
+        self.game_data = {}
+        
         self.drawer = DrawObjects(self.screen) 
         self.ipscreen = IpInput(self.screen)
 
@@ -67,9 +69,6 @@ class Game:
             if self.connection.data != None:
                 self.game_data = self.connection.data # check if server sent any data
 
-            backspaces = len(str(self.game_data))
-            print(print("\b" * backspaces + str(self.game_data), end = "", flush = True))
-
             self.update()
             self.events()
             self.draw()
@@ -89,7 +88,9 @@ class Game:
 
     def update(self):
         # Gameloop - Update
-        pass
+
+        # update player data
+        self.game_data["player_data"] = self.player.player_data()
 
     def events(self):
         # Gameloop - Events
@@ -107,7 +108,6 @@ class Game:
                 clicked = wasclicked(mouse)
 
                 if clicked:
-                    #self.connection.send_data("Hey There :D")
                     self.player.draw_card()
                     print(len(self.player.deck))
                     self.update()
