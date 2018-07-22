@@ -12,14 +12,15 @@ class DrawObjects:
     """Ta klasa służy do ułatwienia rysowania obiektów"""
 
     def __init__(
-    self, 
-    screen, 
-    hand_area = 0,
-    hand_list_of_left_x = [],
-    hand_list_of_right_x = [], 
-    hand_up_y = 0,
-    hand_down_y = 0,
-    beetwen_card = 0):
+                self, 
+                screen, 
+                hand_area = 0,
+                hand_list_of_left_x = [],
+                hand_list_of_right_x = [], 
+                hand_up_y = 0,
+                hand_down_y = 0,
+                beetwen_card = 0):
+    
         self.screen = screen
         self.player = Player()
         self.hand_area = hand_area
@@ -61,7 +62,6 @@ class DrawObjects:
             self.hand_list_of_left_x.append(widthmargin*3 + self.beetwen_card * i)
             self.hand_list_of_right_x.append(self.hand_list_of_left_x[i] + widthcard)
             self.screen.blit(self.player.hand[i].image, (self.hand_list_of_left_x[i], self.hand_up_y))
-            pygame.display.flip()
 
     def draw_right_from_hand(self):
         position = pygame.mouse.get_pos()

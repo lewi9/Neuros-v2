@@ -38,45 +38,46 @@ class Game:
         self.player = Player()
         self.drawer = DrawObjects(self.screen) 
         self.ipscreen = IpInput(self.screen)
+
+        self.mouse_position = None
+        self.hovered_hero = False
+        self.hovered_yhero = False
+
+        self.end_turn = Button(self.screen, card_viev_left_x, down_deck_up_y, 210, heightcard)
+        self.end_turn.set_text("END TURN")
+        self.end_turn.set_text_color(CYAN)
+        self.end_turn.set_button_color(BLACK)
+        self.end_turn.set_text_size(30)
             
     def new(self):
         # start a new game
-        # run_thread = threading.Thread(target = self.run)
-        # run_thread.start()
-                        
-        self.connect_to_server()# ip = self.ip)
+        self.connect_to_server()# ip = self.ip) narazie testuje na localhost
         self.player.fill_deck()
         self.player.shuffle_deck()
         self.player.prepare_hand()
-        self.draw()
-        self.drawer.draw_hand()
         self.run()
         
     def run(self):
         # Gameloop      
         self.playing = True
         while self.playing:
+            self.clock.tick(FPS)
 
             self.update()
-            self.clock.tick(FPS)
             self.events()
+            self.draw()
             
-
-            #Przeniosłem to do def new(self): bo mi przeszkadzało
-
-            #self.draw()
-
-        try:
+        try: # kiedy gameloop się skończył, ten kod jest do odłaćzenia się z serwer'em
             self.connection.listening = False
             self.connection.shutdown(socket.SHUT_WR)
             self.connection.close()
             self.connection.listenerThread.terminate()
-        except OSError:
+        except OSError: # jak mi ten error wywali to ma iść dalej
             pass
 
     def update(self):
         # Gameloop - Update
-        self.drawer.draw_hand()
+        pass
 
     def events(self):
         # Gameloop - Events
@@ -105,17 +106,19 @@ class Game:
                     data = self.player.player_data()
                     print(data)
 
-            position = pygame.mouse.get_pos()
-            self.drawer.draw_right_from_hand()
+            self.mouse_position = pygame.mouse.get_pos()
 
             #Obrazki!
-            if position[0] > up_deck_list_left_x[1] and position[0] < up_deck_list_right_x[1]:
-                if position[1] < up_deck_down_y and position[1] > up_deck_up_y:
-                    self.screen.blit(big_hero, (card_viev_left_x, card_view_up_y))
-                    pygame.display.flip()
-                if position[1] < down_deck_down_y and position[1] > down_deck_up_y:
-                    self.screen.blit(big_yhero, (card_viev_left_x, card_view_up_y))
-                    pygame.display.flip()
+            if self.mouse_position[0] > up_deck_list_left_x[1] and self.mouse_position[0] < up_deck_list_right_x[1]:
+                if self.mouse_position[1] < up_deck_down_y and self.mouse_position[1] > up_deck_up_y:
+                    self.hovered_hero = True
+                
+                elif self.mouse_position[1] < down_deck_down_y and self.mouse_position[1] > down_deck_up_y:
+                    self.hovered_yhero = True
+
+                else:
+                    self.hovered_hero = False
+                    self.hovered_yhero = False
 
     def draw(self):
         # Gameloop - Draw
@@ -123,20 +126,23 @@ class Game:
         self.screen.fill(BACKGROUND_COLOR)
 
         self.drawer.draw_board()
+        self.drawer.draw_hand()
+        self.drawer.draw_right_from_hand()
+
+        if self.hovered_hero: # jeżeli myszka na hero'em to blit'uje go na screen
+            self.screen.blit(big_hero, (card_viev_left_x, card_view_up_y))
+
+        elif self.hovered_yhero: # jeżeli myszka na hero'em to blit'uje go na screen
+            self.screen.blit(big_yhero, (card_viev_left_x, card_view_up_y))
 
         #jest tylko testowy jeżeli przeszkadza to ta funkcja jest w client_test_button.py
         draw_test_button(self.screen)
         
         #This is End Turn Button
-        self.end_turn = Button(self.screen, card_viev_left_x, down_deck_up_y, 210, heightcard)
-        self.end_turn.set_text("END TURN")
-        self.end_turn.set_text_color(CYAN)
-        self.end_turn.set_button_color(BLACK)
-        self.end_turn.set_text_size(30)
         self.end_turn.create()
            
         pygame.display.flip()
-    
+
     def show_start_screen(self):
         # Loads the start screen        
         self.screen.fill(WHITE)
@@ -187,7 +193,7 @@ class Game:
 
             self.ipscreen.draw_input_box()
             self.ipscreen.draw_ip_text()
-            pygame.display.update()
+            pygame.display.flip()
                         
     def connect_to_server(self, ip = "localhost", port = PORT):
         # Connect to server
