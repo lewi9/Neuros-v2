@@ -3,6 +3,7 @@ import json
 from multiprocessing import Process
 from Settings import PORT
 
+
 class GameClient(socket.socket):
     """Ta klasa połącza się z serwerem i komunikuję się z iną instancją tej klasy"""
 
@@ -10,6 +11,7 @@ class GameClient(socket.socket):
         """Ta funkcja inicjalizuję tą klase"""
         self.host = host
         self.port = port
+        self.data = None
         self.listening = True
 
         super().__init__(socket.AF_INET, socket.SOCK_STREAM) # init parent class
@@ -32,16 +34,16 @@ class GameClient(socket.socket):
 
         while self.listening:
             try:
-                data = self.recv(1024).decode("utf-8")
-                if not data:
+                conn = self.recv(1024).decode("utf-8")
+                if not conn:
                     self.listening = False
                     try:
                         self.shutdown(socket.SHUT_WR)
                         self.close()
                     except OSError:
                         pass
-                    
-                print("Recieved from server: " + data)
+
+                self.data = deserialize(conn)
 
             except Exception as e:
                 print(e)
@@ -61,10 +63,30 @@ class GameClient(socket.socket):
         """Zamienia pythonowe obiekty na json"""
         return json.dumps(payload)
 
-    def deserialize(self):
+    def deserialize(self, payload):
         """Zamienia json obiekty na python"""
-        return json.loads(self.recieved_payload)
+        return json.loads(payload)
 
+
+class Data:
+    """This is a class that prepares data to be sent"""
+    def __init__(self):
+        self.data = {}
+
+    def __getitem__(self, key):
+        return self.data[key]
+
+    def add_data(self, key, info):
+        self.data[key] = info
+
+    def delete_data(self, key):
+        del self.data[key]
+
+# d = Data()
+# d.add_data("a", [1, 2, 3])
+# d.add_data("b", "BBBB")
+
+# print(d["a"])
 
 
 

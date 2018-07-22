@@ -36,6 +36,7 @@ class Game:
 
         self.running = True 
         self.player = Player()
+        self.game_data = "Hello There :D"#self.player.player_data()
         self.drawer = DrawObjects(self.screen) 
         self.ipscreen = IpInput(self.screen)
 
@@ -51,7 +52,7 @@ class Game:
             
     def new(self):
         # start a new game
-        self.connect_to_server()# ip = self.ip) narazie testuje na localhost
+        self.connect_to_server(ip = self.ip) 
         self.player.fill_deck()
         self.player.shuffle_deck()
         self.player.prepare_hand()
@@ -63,9 +64,20 @@ class Game:
         while self.playing:
             self.clock.tick(FPS)
 
+            if self.connection.data != None:
+                self.game_data = self.connection.data # check if server sent any data
+
+            backspaces = len(str(self.game_data))
+            print(print("\b" * backspaces + str(self.game_data), end = "", flush = True))
+
             self.update()
             self.events()
             self.draw()
+
+            try:
+                self.connection.send_data(self.game_data) # send new data back to server
+            except BrokenPipeError:
+                pass
             
         try: # kiedy gameloop się skończył, ten kod jest do odłaćzenia się z serwer'em
             self.connection.listening = False
