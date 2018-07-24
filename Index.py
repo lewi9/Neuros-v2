@@ -67,17 +67,18 @@ class Game:
         while self.playing:
             self.clock.tick(FPS)
 
-            # if self.connection.data != None:
-            # 	self.game_data = self.connection.data # check if server sent any data
+            if self.connection.data != None:
+                self.game_data = self.connection.data # check if server sent any data
 
             self.update()
             self.events()
             self.draw()
 
-            # try:
-            # 	self.connection.send_data(self.game_data) # send new data back to server
-            # except BrokenPipeError:
-            # 	pass
+            try:
+                print(self.game_data)
+                self.connection.send_data(self.game_data) # send new data back to server
+            except BrokenPipeError:
+                pass
             
         try: # kiedy gameloop się skończył, ten kod jest do odłaćzenia się z serwer'em
             self.connection.listening = False

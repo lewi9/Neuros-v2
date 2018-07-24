@@ -83,32 +83,41 @@ class Player:
 
     #Nie miałem pomysłu jak to zrobić
     def player_data(self):
-        deck_info = {}
-        hand_info = {}
-        graveyard_info = {}
+        def format_info(info):
+            dump_info = {}
+
+            if type(info) == type(dict()):
+                for key in info:
+                    if info[key] == None:
+                        dump_info[key] = None
+                    else:
+                        dump_info[key] = info[key].name
+                return dump_info						
+
+            elif type(info) == type(list()):
+                for card in info:
+                    card_info = card.get_data()
+                    dump_info[card.name] = card_info
+                return dump_info
+
+
+        deck_info = format_info(self.deck)
+        hand_info = format_info(self.hand)
+        graveyard_info = format_info(self.graveyard)
+        attacks_info = format_info(self.attacks)
+        defense_info = format_info(self.defense)
+        barracks_info = format_info(self.barracks)
 
         data = {
             "player_name" : self.player_name,
             "myTurn" : self.my_turn,
-            "attack_area" : self.attacks,
-            "defense_area" : self.defense,
-            "barracks_area" : self.barracks
+            "deck" : deck_info,
+            "hand" : hand_info,
+            "graveyard" : graveyard_info,
+            "attack_area" : attacks_info,
+            "defense_area" : defense_info,
+            "barracks_area" : barracks_info
         }
-
-        for card in self.deck:
-            card_info = card.get_data()
-            deck_info[card_info["name"]] = card_info
-            data["deck"] = deck_info
-
-        for card in self.hand:
-            card_info = card.get_data()
-            hand_info[card_info["name"]] = card_info
-            data["hand"] = hand_info
-
-        for card in self.graveyard:
-            card_info = card.get_data()
-            hand_info[card_info["name"]] = card_info
-            data["graveyard"] = hand_info
 
         return data
 
