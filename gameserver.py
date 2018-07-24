@@ -12,7 +12,10 @@ class GameInstanceServer:
             self.other_client = other_client
             super().__init__(target = self.handler, args = (self.client, self.other_client))
 
-        def handler(self, client, other_client):
+        def handler(self, client, other_client, name):
+            conn = client.recv(1024).decode("utf-8")
+            client.sendall(name.encode("utf-8"))
+
             while True:		
                 data = client.recv(1024).decode("utf-8")
                 
@@ -30,8 +33,8 @@ class GameInstanceServer:
     def __init__(self, client1, client2):
         self.client1 = client1
         self.client2 = client2
-        self.RequestHandler(self.client1, self.client2).start()
-        self.RequestHandler(self.client2, self.client1).start()
+        self.RequestHandler(self.client1, self.client2, "Player_1").start()
+        self.RequestHandler(self.client2, self.client1, "Player_2").start()
 
 
 class ManageGames(socket.socket):

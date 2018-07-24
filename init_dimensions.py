@@ -29,7 +29,7 @@ for i in range(0,10):
 right_x_of_card = []
 
 for i in range(1,11):
-    right_x = x + widthmargin*1 + widthcard*1
+    right_x = x + widthmargin*i + widthcard*i
     right_x_of_card.append(right_x)
 
 #Lists will all screen parameters

@@ -51,6 +51,7 @@ class DrawObjects:
         self.screen.blit(deck_image, (up_deck_list_left_x[0], up_deck_up_y))
         self.screen.blit(deck_image, (down_deck_list_left_x[0], down_deck_up_y))
 
+
     def draw_hand(self):
         self.hand_list_of_left_x = []
         self.hand_list_of_right_x = []
@@ -65,20 +66,29 @@ class DrawObjects:
 
     def draw_right_from_hand(self):
         position = pygame.mouse.get_pos()
-        if self.hand_list_of_left_x[2] > self.hand_list_of_right_x[1]:
-            for i in range(len(self.player.hand)-2):
-                if position[0] > self.hand_list_of_left_x[i] and position[0] < self.hand_list_of_left_x[i+1]:
-                    if position[1] < self.hand_down_y and position[1] > self.hand_up_y:
-                        self.screen.blit(self.player.hand[i].big_image, (card_viev_left_x, card_view_up_y))
-            last = len(self.player.hand-1)
-            if position[0] > self.hand_list_of_left_x[last] and position[0] < self.hand_list_of_right_x[last]:
-                 if position[1] < self.hand_down_y and position[1] > self.hand_up_y:   
-                       self.screen.blit(self.player.hand[i].big_image, (card_viev_left_x, card_view_up_y))         
+        if len(self.hand_list_of_left_x) > 3:
+            if self.hand_list_of_left_x[2] < self.hand_list_of_right_x[1]:
+                for i in range(len(self.player.hand)-2):
+                    if position[0] > self.hand_list_of_left_x[i] and position[0] < self.hand_list_of_left_x[i+1]:
+                        if position[1] < self.hand_down_y and position[1] > self.hand_up_y:
+                            self.screen.blit(self.player.hand[i].big_image, (card_viev_left_x, card_view_up_y))
+                last = len(self.player.hand) - 2 
+                if position[0] > self.hand_list_of_left_x[last] and position[0] < self.hand_list_of_right_x[last]:
+                     if position[1] < self.hand_down_y and position[1] > self.hand_up_y:   
+                           self.screen.blit(self.player.hand[i].big_image, (card_viev_left_x, card_view_up_y))         
+        
+            else:
+                for i in range(len(self.player.hand)-1):
+                    if position[0] > self.hand_list_of_left_x[i] and position[0] < self.hand_list_of_right_x[i]:
+                        if position[1] < self.hand_down_y and position[1] > self.hand_up_y:
+                            self.screen.blit(self.player.hand[i].big_image, (card_viev_left_x, card_view_up_y))
+    
         else:
             for i in range(len(self.player.hand)-1):
                 if position[0] > self.hand_list_of_left_x[i] and position[0] < self.hand_list_of_right_x[i]:
                     if position[1] < self.hand_down_y and position[1] > self.hand_up_y:
                         self.screen.blit(self.player.hand[i].big_image, (card_viev_left_x, card_view_up_y))
+    
 
             
 
@@ -95,5 +105,17 @@ class DrawObjects:
         button = pygame.Rect(x, y, length, height)
         pygame.draw.rect(self.screen, color, button)
 
+    def draw_player_area_cards(self, attacks, defense, barracks):
+        for i in range(10):
+            if attacks[i] != None:
+                self.screen.blit(attacks[i].image, (left_x_of_card[i], down_attack_up_y))
+            if defense[i] != None:
+                
+                self.screen.blit(defense[i].image, (left_x_of_card[i], down_defense_up_y))
+            if barracks[i] != None:
+                self.screen.blit(barracks[i].image, (left_x_of_card[i], down_barrack_up_y))
+    
+    def draw_enemy_area_cards(self):
+        pass
 
 

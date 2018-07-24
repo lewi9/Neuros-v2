@@ -23,7 +23,7 @@ from MakeButton import Button
 from card import Card
 from base_of_card import *
 from player import Player
-from gameclient import GameClient, Data
+from gameclient import GameClient
 
 
 class Game:  
@@ -38,7 +38,7 @@ class Game:
         self.player = Player()
         
         self.game_data = {}
-        
+
         self.drawer = DrawObjects(self.screen) 
         self.ipscreen = IpInput(self.screen)
 
@@ -63,20 +63,21 @@ class Game:
     def run(self):
         # Gameloop      
         self.playing = True
+        #print(self.player.player_data())
         while self.playing:
             self.clock.tick(FPS)
 
-            if self.connection.data != None:
-                self.game_data = self.connection.data # check if server sent any data
+            # if self.connection.data != None:
+            # 	self.game_data = self.connection.data # check if server sent any data
 
             self.update()
             self.events()
             self.draw()
 
-            try:
-                self.connection.send_data(self.game_data) # send new data back to server
-            except BrokenPipeError:
-                pass
+            # try:
+            # 	self.connection.send_data(self.game_data) # send new data back to server
+            # except BrokenPipeError:
+            # 	pass
             
         try: # kiedy gameloop się skończył, ten kod jest do odłaćzenia się z serwer'em
             self.connection.listening = False
@@ -106,11 +107,19 @@ class Game:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse = pygame.mouse.get_pos()
                 clicked = wasclicked(mouse)
+                self.player.place_card(mouse, self.player)
+                self.player.was_clicked_in_hand(mouse,
+                                                self.drawer.hand_list_of_left_x,
+                                                self.drawer.hand_list_of_right_x,
+                                                self.drawer.hand_up_y,
+                                                self.drawer.hand_down_y,
+                                                self.player
+                                                )
+                
 
                 if clicked:
                     self.player.draw_card()
                     print(len(self.player.deck))
-                    self.update()
 
                 if self.end_turn.wasclicked(mouse):
                     print("Now is your enemies turn")
@@ -140,6 +149,9 @@ class Game:
         self.drawer.draw_board()
         self.drawer.draw_hand()
         self.drawer.draw_right_from_hand()
+        self.drawer.draw_player_area_cards(self.player.attacks,
+                                           self.player.defense,
+                                           self.player.barracks)
 
         if self.hovered_hero: # jeżeli myszka na hero'em to blit'uje go na screen
             self.screen.blit(big_hero, (card_viev_left_x, card_view_up_y))
@@ -210,6 +222,8 @@ class Game:
     def connect_to_server(self, ip = "localhost", port = PORT):
         # Connect to server
         self.connection = GameClient(ip, port)
+        # name = self.connection.recv(1024).decode("utf-8")
+        # self.player.set_player_name(name)
 
 
 g = Game()
