@@ -36,7 +36,7 @@ class Game:
         self.clock = pygame.time.Clock() # nie wiem jak to działa ale pozwala na fps
         
         self.running = True 
-        
+        self.enemy_areas = {}
         self.player = Player()
 
         self.player_data = {}
@@ -103,6 +103,10 @@ class Game:
             self.enemy_data[self.enemy_name] = self.connection.recv_data
             if self.enemy_data: # checks if enemy data exists
                 self.game_data.update(self.enemy_data) # update refers to a dict method
+                #Tu robię słownik, który będzie użyty przez drawer, line 158 in Index.py
+                #line 52 in card.py
+                self.enemy_areas = Card.return_data(self.enemy_data[self.enemy_name], self.enemy_data[self.enemy_name]) 
+
 
     def events(self):
         # Gameloop - Events
@@ -140,7 +144,7 @@ class Game:
                     self.player.draw_card()
                     self.barracks_put = 0
                     data = self.player.player_data()
-                    print(data)
+                    #print(data)
 
 
     def draw(self):
@@ -152,6 +156,11 @@ class Game:
         self.drawer.draw_player_area_cards(self.player.attacks,
                                            self.player.defense,
                                            self.player.barracks)
+        #Rysuje tylko jak enemy_data istnieje, line 154 in drawings.py
+        if self.enemy_data:
+            self.drawer.draw_enemy_area_cards(self.enemy_areas["attacks"],
+                                              self.enemy_areas["defense"],
+                                              self.enemy_areas["barracks"])
         self.drawer.draw_right_from_hand()
         self.drawer.draw_right_from_areas(self.player)
         self.drawer.blit_hero()

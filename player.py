@@ -82,7 +82,7 @@ class Player:
             print("You haven't more cards in deck")
 
 
-    #Nie miałem pomysłu jak to zrobić
+
     def player_data(self):
         def format_info(info):
             dump_info_dict = {}
@@ -93,7 +93,8 @@ class Player:
                     if info[key] == None:
                         dump_info_dict[key] = None
                     else:
-                        dump_info_dict[key] = info[key].name
+                        #dump_info_dict[key] = info[key].name
+                        dump_info_dict[key] = info[key].get_data()
                 return dump_info_dict						
 
             elif type(info) == type(list()):
