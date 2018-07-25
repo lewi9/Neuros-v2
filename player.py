@@ -118,6 +118,7 @@ class Player:
 
     def end_turn(self):
         self.my_turn = False
+        Card.end_turn_minus_frozen(self, self.barracks)
 
     def start_turn(self):
         self.my_turn = True

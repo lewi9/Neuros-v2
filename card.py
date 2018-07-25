@@ -29,4 +29,11 @@ class Card:
     def double_hp(self):
         self.hp = self.hp*2
 
+    def end_turn_minus_frozen(self, barracks):
+        for i in range(10):
+            if barracks[i] != None:
+                barracks[i].frozen_time -= 1
+
+    
+
     
