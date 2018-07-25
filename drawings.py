@@ -93,6 +93,19 @@ class DrawObjects:
                     if position[1] < self.hand_down_y and position[1] > self.hand_up_y:
                         self.screen.blit(self.player.hand[i].big_image, (card_viev_left_x, card_view_up_y))
     
+    def draw_right_from_areas(self, player):
+        position = pygame.mouse.get_pos()
+        for i in range(10):
+            if position[0] > left_x_of_card[i] and position[0] < right_x_of_card[i]:
+                if position[1] < down_attack_down_y and position[1] > down_attack_up_y:
+                    if player.attacks[i] != None:
+                        self.screen.blit(player.attacks[i].big_image, (card_viev_left_x, card_view_up_y))
+                elif position[1] < down_defense_down_y and position[1] > down_defense_up_y:
+                    if player.defense[i] != None:
+                        self.screen.blit(player.defense[i].big_image, (card_viev_left_x, card_view_up_y))
+                elif position[1] < down_barrack_down_y and position[1] > down_barrack_up_y:
+                    if player.barracks[i] != None:    
+                        self.screen.blit(player.barracks[i].big_image, (card_viev_left_x, card_view_up_y))
 
             
 

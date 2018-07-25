@@ -159,7 +159,7 @@ class Game:
             self.screen.blit(big_yhero, (card_viev_left_x, card_view_up_y))
 
         self.drawer.draw_right_from_hand()
-
+        self.drawer.draw_right_from_areas(self.player)
         #jest tylko testowy jeżeli przeszkadza to ta funkcja jest w client_test_button.py
         draw_test_button(self.screen)
         
