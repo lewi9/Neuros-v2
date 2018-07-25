@@ -39,8 +39,7 @@ class GameClient(socket.socket):
         """Ta funkcja czeka na wiadomość od drugiego klienta za pomocą serwera"""
 
         while self.listening:
-            conn = self.recv(4096).decode("utf-8")
-
+            conn = self.recv(16384).decode("utf-8")
             if not conn:
                 self.listening = False
                 try:
@@ -50,12 +49,17 @@ class GameClient(socket.socket):
                     pass
 
             try:
-                self.recv_data = self.deserialize(conn)
+                data = self.deserialize(conn)
+                if data:
+                    self.recv_data = data
                 # pp = pprint.PrettyPrinter()
                 # pp.pprint(self.recv_data)
                 # print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n")
             except json.decoder.JSONDecodeError:
-                pass
+                # pp = pprint.PrettyPrinter()
+                # pp.pprint(conn)
+                # print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n")
+                print("json sie zdupil")
 
     def sender(self):
         """This method constantly sends information with a slight delay"""

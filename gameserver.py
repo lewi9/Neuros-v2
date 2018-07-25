@@ -14,7 +14,7 @@ class GameInstanceServer:
 
         def handler(self, client, other_client):
             while True:		
-                data = client.recv(4096).decode("utf-8")
+                data = client.recv(16384).decode("utf-8")
                 
                 if not data:
                     break
