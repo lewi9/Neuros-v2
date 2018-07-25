@@ -60,12 +60,8 @@ class Game:
             
     def new(self):
         # start a new game
-<<<<<<< HEAD
         self.connect_to_server()#ip = self.ip) 
-=======
         self.barracks_put = 0
-        self.connect_to_server(ip = self.ip) 
->>>>>>> 48b0b8a7afa6201fba77bfaeab606bbd50c52db1
         self.player.fill_deck()
         self.player.shuffle_deck()
         self.player.prepare_hand()
