@@ -33,7 +33,7 @@ class Game:
         self.screen = pygame.display.set_mode((WIDTHSCREEN, HEIGHTSCREEN)) # tworzymy wielkość ekranu
         pygame.display.set_caption("Neuros") # nadajemy nazwe ekranu
         self.clock = pygame.time.Clock() # nie wiem jak to działa ale pozwala na fps
-
+        
         self.running = True 
         self.player = Player()
         
@@ -54,6 +54,7 @@ class Game:
             
     def new(self):
         # start a new game
+        self.barracks_put = 0
         self.connect_to_server(ip = self.ip) 
         self.player.fill_deck()
         self.player.shuffle_deck()
@@ -107,7 +108,7 @@ class Game:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse = pygame.mouse.get_pos()
                 clicked = wasclicked(mouse)
-                self.player.place_card(mouse, self.player)
+                self.barracks_put = self.player.place_card(mouse, self.player, self.barracks_put )
                 self.player.was_clicked_in_hand(mouse,
                                                 self.drawer.hand_list_of_left_x,
                                                 self.drawer.hand_list_of_right_x,
@@ -124,6 +125,8 @@ class Game:
                 if self.end_turn.wasclicked(mouse):
                     print("Now is your enemies turn")
                     self.player.end_turn()
+                    self.player.draw_card()
+                    self.barracks_put = 0
                     data = self.player.player_data()
                     print(data)
 

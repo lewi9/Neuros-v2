@@ -2,6 +2,7 @@ from card import Card
 from base_of_card import *
 from random import shuffle
 from init_dimensions import *
+from Settings import *
 
 class Player:
     
@@ -142,7 +143,7 @@ class Player:
                 if position[0] > leftx[last] and position[0] < rightx[last]:
                     if position[1] < downy and position[1] > upy:   
                         player.unclick(player.hand)
-                        player.hand[i].clicked = True         
+                        player.hand[i+1].clicked = True         
             else:
                 for i in range(len(player.hand)-1):
                     if position[0] > leftx[i] and position[0] < rightx[i]:
@@ -157,13 +158,13 @@ class Player:
                         player.hand[i].clicked = True
                         
                     
-    def place_card(self, position, player):
+    def place_card(self, position, player, was_put_in_frozen):
         for i in range(len(player.hand)-1):
             if player.hand[i].clicked:
                 for ii in range(10):
                     if position[0] > left_x_of_card[ii] and position[0] < right_x_of_card[ii]:
                         if position[1] < down_attack_down_y and position[1] > down_attack_up_y:
-                            if self.attacks[ii] == None:
+                            if self.attacks[ii] == None and player.hand[i].frozen_time < 1:
                                 player.hand[i].clicked = False
                                 self.attacks[ii] = player.hand[i]
                                 player.hand.pop(i)
@@ -173,7 +174,9 @@ class Player:
                                 self.defense[ii] = player.hand[i]
                                 player.hand.pop(i)
                         elif position[1] < down_barrack_down_y and position[1] > down_barrack_up_y:
-                            if self.barracks[ii] == None:
+                            if self.barracks[ii] == None and was_put_in_frozen != 1:
                                 player.hand[i].clicked = False
                                 self.barracks[ii] = player.hand[i]
                                 player.hand.pop(i)
+                                was_put_in_frozen = 1
+        return was_put_in_frozen

@@ -79,7 +79,7 @@ class DrawObjects:
                 last = len(self.player.hand) - 2 
                 if position[0] > self.hand_list_of_left_x[last] and position[0] < self.hand_list_of_right_x[last]:
                      if position[1] < self.hand_down_y and position[1] > self.hand_up_y:   
-                           self.screen.blit(self.player.hand[i].big_image, (card_viev_left_x, card_view_up_y))         
+                           self.screen.blit(self.player.hand[i+1].big_image, (card_viev_left_x, card_view_up_y))         
         
             else:
                 for i in range(len(self.player.hand)-1):
