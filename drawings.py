@@ -53,6 +53,8 @@ class DrawObjects:
 
 
     def draw_hand(self):
+
+        "Draw Cards on hand"
         self.hand_list_of_left_x = []
         self.hand_list_of_right_x = []
         self.hand_area = WIDTHSCREEN - widthmargin*6
@@ -65,6 +67,8 @@ class DrawObjects:
             self.screen.blit(self.player.hand[i].image, (self.hand_list_of_left_x[i], self.hand_up_y))
 
     def draw_right_from_hand(self):
+
+        "Draw Cards, on right part of screen, from hand"
         position = pygame.mouse.get_pos()
         if len(self.hand_list_of_left_x) > 3:
             if self.hand_list_of_left_x[2] < self.hand_list_of_right_x[1]:
@@ -75,7 +79,7 @@ class DrawObjects:
                 last = len(self.player.hand) - 2 
                 if position[0] > self.hand_list_of_left_x[last] and position[0] < self.hand_list_of_right_x[last]:
                      if position[1] < self.hand_down_y and position[1] > self.hand_up_y:   
-                           self.screen.blit(self.player.hand[i].big_image, (card_viev_left_x, card_view_up_y))         
+                           self.screen.blit(self.player.hand[i+1].big_image, (card_viev_left_x, card_view_up_y))         
         
             else:
                 for i in range(len(self.player.hand)-1):
@@ -89,8 +93,30 @@ class DrawObjects:
                     if position[1] < self.hand_down_y and position[1] > self.hand_up_y:
                         self.screen.blit(self.player.hand[i].big_image, (card_viev_left_x, card_view_up_y))
     
+    def draw_right_from_areas(self, player):
+        position = pygame.mouse.get_pos()
+        for i in range(10):
+            if position[0] > left_x_of_card[i] and position[0] < right_x_of_card[i]:
+                if position[1] < down_attack_down_y and position[1] > down_attack_up_y:
+                    if player.attacks[i] != None:
+                        self.screen.blit(player.attacks[i].big_image, (card_viev_left_x, card_view_up_y))
+                elif position[1] < down_defense_down_y and position[1] > down_defense_up_y:
+                    if player.defense[i] != None:
+                        self.screen.blit(player.defense[i].big_image, (card_viev_left_x, card_view_up_y))
+                elif position[1] < down_barrack_down_y and position[1] > down_barrack_up_y:
+                    if player.barracks[i] != None:    
+                        self.screen.blit(player.barracks[i].big_image, (card_viev_left_x, card_view_up_y))
+
+    def blit_hero(self):
+        mouse_position = pygame.mouse.get_pos()
 
             
+        if mouse_position[0] > up_deck_list_left_x[1] and mouse_position[0] < up_deck_list_right_x[1]:
+            if mouse_position[1] < up_deck_down_y and mouse_position[1] > up_deck_up_y:
+                self.screen.blit(big_hero, (card_viev_left_x, card_view_up_y))
+                
+            elif mouse_position[1] < down_deck_down_y and mouse_position[1] > down_deck_up_y:
+                self.screen.blit(big_yhero, (card_viev_left_x, card_view_up_y))
 
     def draw_text(self, text, size, color, x, y):
         """This draws a text in pygame. The x and y is the center of the text"""
@@ -106,6 +132,7 @@ class DrawObjects:
         pygame.draw.rect(self.screen, color, button)
 
     def draw_player_area_cards(self, attacks, defense, barracks):
+        "This Draw a player areas cards"
         for i in range(10):
             if attacks[i] != None:
                 self.screen.blit(attacks[i].image, (left_x_of_card[i], down_attack_up_y))

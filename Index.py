@@ -34,7 +34,7 @@ class Game:
         self.screen = pygame.display.set_mode((WIDTHSCREEN, HEIGHTSCREEN)) # tworzymy wielkość ekranu
         pygame.display.set_caption("Neuros") # nadajemy nazwe ekranu
         self.clock = pygame.time.Clock() # nie wiem jak to działa ale pozwala na fps
-
+        
         self.running = True 
         
         self.player = Player()
@@ -60,7 +60,12 @@ class Game:
             
     def new(self):
         # start a new game
+<<<<<<< HEAD
         self.connect_to_server()#ip = self.ip) 
+=======
+        self.barracks_put = 0
+        self.connect_to_server(ip = self.ip) 
+>>>>>>> 48b0b8a7afa6201fba77bfaeab606bbd50c52db1
         self.player.fill_deck()
         self.player.shuffle_deck()
         self.player.prepare_hand()
@@ -117,7 +122,8 @@ class Game:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse = pygame.mouse.get_pos()
                 clicked = wasclicked(mouse)
-                self.player.place_card(mouse, self.player)
+                self.player.move_from_barracks_to_attacks(mouse, self.player)
+                self.barracks_put = self.player.place_card(mouse, self.player, self.barracks_put )
                 self.player.was_clicked_in_hand(mouse,
                                                 self.drawer.hand_list_of_left_x,
                                                 self.drawer.hand_list_of_right_x,
@@ -125,7 +131,7 @@ class Game:
                                                 self.drawer.hand_down_y,
                                                 self.player
                                                 )
-                
+                self.player.was_clicked_in_barracks(mouse, self.player)
 
                 if clicked:
                     self.player.draw_card()
@@ -134,41 +140,24 @@ class Game:
                 if self.end_turn.wasclicked(mouse):
                     print("Now is your enemies turn")
                     self.player.end_turn()
+                    self.player.draw_card()
+                    self.barracks_put = 0
                     data = self.player.player_data()
                     print(data)
 
-            self.mouse_position = pygame.mouse.get_pos()
-
-            #Obrazki!
-            if self.mouse_position[0] > up_deck_list_left_x[1] and self.mouse_position[0] < up_deck_list_right_x[1]:
-                if self.mouse_position[1] < up_deck_down_y and self.mouse_position[1] > up_deck_up_y:
-                    self.hovered_hero = True
-                
-                elif self.mouse_position[1] < down_deck_down_y and self.mouse_position[1] > down_deck_up_y:
-                    self.hovered_yhero = True
-
-                else:
-                    self.hovered_hero = False
-                    self.hovered_yhero = False
 
     def draw(self):
         # Gameloop - Draw
 
         self.screen.fill(BACKGROUND_COLOR)
-
         self.drawer.draw_board()
         self.drawer.draw_hand()
-        self.drawer.draw_right_from_hand()
         self.drawer.draw_player_area_cards(self.player.attacks,
                                            self.player.defense,
                                            self.player.barracks)
-
-        if self.hovered_hero: # jeżeli myszka na hero'em to blit'uje go na screen
-            self.screen.blit(big_hero, (card_viev_left_x, card_view_up_y))
-
-        elif self.hovered_yhero: # jeżeli myszka na hero'em to blit'uje go na screen
-            self.screen.blit(big_yhero, (card_viev_left_x, card_view_up_y))
-
+        self.drawer.draw_right_from_hand()
+        self.drawer.draw_right_from_areas(self.player)
+        self.drawer.blit_hero()
         #jest tylko testowy jeżeli przeszkadza to ta funkcja jest w client_test_button.py
         draw_test_button(self.screen)
         
