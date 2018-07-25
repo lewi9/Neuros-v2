@@ -10,6 +10,7 @@
 #So i will import Pygame and sys
 
 import pygame, sys
+import pprint
 import threading
 import socket
 
@@ -38,9 +39,11 @@ class Game:
         
         self.player = Player()
 
+        self.player_data = {}
+
         self.game_data = {}
+        self.enemy_data = {}
         self.enemy_name = ""
-        self.enemy_data = None
 
         self.drawer = DrawObjects(self.screen) 
         self.ipscreen = IpInput(self.screen)
@@ -89,20 +92,16 @@ class Game:
 
     def update(self):
         # Gameloop - Update
-        pass
 
         # update game data
-        try:
-            del self.game_data[self.player.player_name]
-        except KeyError:
-            print("KeyError")
-            
-        self.game_data[self.player.player_name] = self.player.player_data()
-    
-        # self.enemy_data = self.connection.data
-        # self.game_data[self.enemy_name] = self.enemy_data
 
-        # print(self.game_data)
+        self.player_data[self.player.player_name] = self.player.player_data()
+        self.game_data.update(self.player_data) # update refers to a dict method
+
+        if self.connection.recv_data != None:
+            self.enemy_data[self.enemy_name] = self.connection.recv_data
+            if self.enemy_data: # checks if enemy data exists
+                self.game_data.update(self.enemy_data) # update refers to a dict method
 
     def events(self):
         # Gameloop - Events

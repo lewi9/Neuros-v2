@@ -1,5 +1,6 @@
 import socket
 import json
+import pprint
 from time import sleep
 from threading import Thread
 from Settings import PORT
@@ -39,7 +40,7 @@ class GameClient(socket.socket):
 
         while self.listening:
             conn = self.recv(4096).decode("utf-8")
-            print(conn)
+
             if not conn:
                 self.listening = False
                 try:
@@ -49,8 +50,10 @@ class GameClient(socket.socket):
                     pass
 
             try:
-                self.data = self.deserialize(conn)
-                # print(self.data)
+                self.recv_data = self.deserialize(conn)
+                # pp = pprint.PrettyPrinter()
+                # pp.pprint(self.recv_data)
+                # print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n")
             except json.decoder.JSONDecodeError:
                 pass
 
