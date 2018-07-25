@@ -54,7 +54,7 @@ class DrawObjects:
 
     def draw_hand(self):
 
-         "Draw Cards on hand"
+        "Draw Cards on hand"
         self.hand_list_of_left_x = []
         self.hand_list_of_right_x = []
         self.hand_area = WIDTHSCREEN - widthmargin*6
