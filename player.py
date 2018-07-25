@@ -84,21 +84,23 @@ class Player:
     #Nie miałem pomysłu jak to zrobić
     def player_data(self):
         def format_info(info):
-            dump_info = {}
+            dump_info_dict = {}
+            dump_info_list = []
 
             if type(info) == type(dict()):
                 for key in info:
                     if info[key] == None:
-                        dump_info[key] = None
+                        dump_info_dict[key] = None
                     else:
-                        dump_info[key] = info[key].name
-                return dump_info						
+                        dump_info_dict[key] = info[key].name
+                return dump_info_dict						
 
             elif type(info) == type(list()):
                 for card in info:
                     card_info = card.get_data()
-                    dump_info[card.name] = card_info
-                return dump_info
+                    dump_info_list.append(card_info)
+
+                return dump_info_list
 
 
         deck_info = format_info(self.deck)

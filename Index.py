@@ -35,9 +35,12 @@ class Game:
         self.clock = pygame.time.Clock() # nie wiem jak to działa ale pozwala na fps
 
         self.running = True 
-        self.player = Player()
         
+        self.player = Player()
+
         self.game_data = {}
+        self.enemy_name = ""
+        self.enemy_data = None
 
         self.drawer = DrawObjects(self.screen) 
         self.ipscreen = IpInput(self.screen)
@@ -54,7 +57,7 @@ class Game:
             
     def new(self):
         # start a new game
-        self.connect_to_server(ip = self.ip) 
+        self.connect_to_server()#ip = self.ip) 
         self.player.fill_deck()
         self.player.shuffle_deck()
         self.player.prepare_hand()
@@ -63,36 +66,43 @@ class Game:
     def run(self):
         # Gameloop      
         self.playing = True
-        #print(self.player.player_data())
         while self.playing:
             self.clock.tick(FPS)
-
-            if self.connection.data != None:
-                self.game_data = self.connection.data # check if server sent any data
 
             self.update()
             self.events()
             self.draw()
 
             try:
-                print(self.game_data)
-                self.connection.send_data(self.game_data) # send new data back to server
+                # updates client-side data and waits for it to be sent (delay 0.5 sec)
+                self.connection.update_data_to_be_sent(self.game_data) 
             except BrokenPipeError:
                 pass
             
         try: # kiedy gameloop się skończył, ten kod jest do odłaćzenia się z serwer'em
             self.connection.listening = False
+            self.connection.sending = False
             self.connection.shutdown(socket.SHUT_WR)
             self.connection.close()
-            self.connection.listenerThread.terminate()
         except OSError: # jak mi ten error wywali to ma iść dalej
             pass
 
     def update(self):
         # Gameloop - Update
+        pass
 
-        # update player data
-        self.game_data["player_data"] = self.player.player_data()
+        # update game data
+        try:
+            del self.game_data[self.player.player_name]
+        except KeyError:
+            print("KeyError")
+            
+        self.game_data[self.player.player_name] = self.player.player_data()
+    
+        # self.enemy_data = self.connection.data
+        # self.game_data[self.enemy_name] = self.enemy_data
+
+        # print(self.game_data)
 
     def events(self):
         # Gameloop - Events
@@ -223,9 +233,12 @@ class Game:
     def connect_to_server(self, ip = "localhost", port = PORT):
         # Connect to server
         self.connection = GameClient(ip, port)
-        # name = self.connection.recv(1024).decode("utf-8")
-        # self.player.set_player_name(name)
+        self.player.player_name = self.connection.get_received_name()
 
+        if self.player.player_name == "Player_1":
+            self.enemy_name = "Player_2"
+        elif self.player.player_name == "Player_2":
+            self.enemy_name = "Player_1"
 
 g = Game()
 

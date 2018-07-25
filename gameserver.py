@@ -12,20 +12,17 @@ class GameInstanceServer:
             self.other_client = other_client
             super().__init__(target = self.handler, args = (self.client, self.other_client))
 
-        def handler(self, client, other_client, name):
-            conn = client.recv(1024).decode("utf-8")
-            client.sendall(name.encode("utf-8"))
-
+        def handler(self, client, other_client):
             while True:		
-                data = client.recv(1024).decode("utf-8")
+                data = client.recv(4096).decode("utf-8")
                 
                 if not data:
                     break
 
-                print("From connected user: " + data)
-                data = data.upper()
-                print("Sending: " + data)
-                other_client.sendall(data.encode("utf-8"))
+                try:
+                    other_client.sendall(data.encode("utf-8"))
+                except BrokenPipeError:
+                    pass
 
             client.shutdown(socket.SHUT_WR)
             client.close()
@@ -33,8 +30,8 @@ class GameInstanceServer:
     def __init__(self, client1, client2):
         self.client1 = client1
         self.client2 = client2
-        self.RequestHandler(self.client1, self.client2, "Player_1").start()
-        self.RequestHandler(self.client2, self.client1, "Player_2").start()
+        self.RequestHandler(self.client1, self.client2).start()
+        self.RequestHandler(self.client2, self.client1).start()
 
 
 class ManageGames(socket.socket):
@@ -89,11 +86,11 @@ class ManageGames(socket.socket):
 
             if not self.client1:
                 self.client1, self.client1_addr = self.accept()
-                self.client1.sendall(message.encode("utf-8"))
+                self.client1.send("Player_1".encode("utf-8"))
 
             if not self.client2:
                 self.client2, self.client2_addr = self.accept()
-                self.client2.sendall(message.encode("utf-8"))
+                self.client2.sendall("Player_2".encode("utf-8"))
                 self.clientsConnected = True
 
         print("Clients connected")
