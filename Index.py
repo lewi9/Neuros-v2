@@ -100,21 +100,19 @@ class Game:
             self.player_data_for_sending = self.player.player_data()
             self.player_data[self.player.player_name] = self.player_data_for_sending
         
-        for key in self.player_data.keys():
-            self.game_data[key] = self.player_data[key]
+            self.game_data.update(self.player_data)
 
         if self.connection.recv_data != None:
             self.enemy_data[self.enemy_name] = self.connection.recv_data
             if self.enemy_data: # checks if enemy data exists
-                for key in self.enemy_data.keys():
-                    self.game_data[key] = self.enemy_data[key]
+                self.game_data.update(self.enemy_data)
                 #Tu robię słownik, który będzie użyty przez drawer, line 158 in Index.py
                 #line 52 in card.py
-                # self.enemy_areas = Card.return_data(self.enemy_data[self.enemy_name], self.enemy_data[self.enemy_name]) 
+                self.enemy_areas = Card.return_data(self.enemy_data[self.enemy_name], self.enemy_data[self.enemy_name]) 
 
-        pp = pprint.PrettyPrinter()
-        pp.pprint(self.game_data)
-        print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n")
+        # pp = pprint.PrettyPrinter()
+        # pp.pprint(self.game_data)
+        # print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n")
 
     def events(self):
         # Gameloop - Events
