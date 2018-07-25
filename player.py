@@ -125,8 +125,13 @@ class Player:
         if self.my_turn == True:
             return True
 
-    def was_clicked_in_hand(self, position, leftx, rightx, upy, downy, player):
 
+    def unclick(self, tab ):
+        for i in range(len(tab)-1):
+            if tab[i].clicked:
+                tab[i].clicked = False
+
+    def was_clicked_in_hand(self, position, leftx, rightx, upy, downy, player):
 
 
         if len(leftx) > 3:
@@ -134,43 +139,37 @@ class Player:
                 for i in range(len(player.hand)-2):
                     if position[0] > leftx[i] and position[0] < leftx[i+1]:
                         if position[1] < downy and position[1] > upy:
-                            for i in range(len(player.hand) - 1):
-                                if player.hand[i].clicked:
-                                    player.hand[i].clicked = False
+                            player.unclick(player.hand)
                             player.hand[i].clicked = True
                             print(player.hand[i].clicked)
                 last = len(player.hand) - 2
                 if position[0] > leftx[last] and position[0] < rightx[last]:
                     if position[1] < downy and position[1] > upy:   
-                        for i in range(len(player.hand) - 1):
-                                if player.hand[i].clicked:
-                                    player.hand[i].clicked = False
+                        player.unclick(player.hand)
                         player.hand[i].clicked = True         
                         print(player.hand[i].clicked)
             else:
                 for i in range(len(player.hand)-1):
                     if position[0] > leftx[i] and position[0] < rightx[i]:
                         if position[1] < downy and position[1] > upy:
-                            for i in range(len(player.hand) - 1):
-                                if player.hand[i].clicked:
-                                    player.hand[i].clicked = False
+                            player.unclick(player.hand)
                             player.hand[i].clicked = True
                             print(player.hand[i].clicked)
         else:
             for i in range(len(player.hand)-1):
                 if position[0] > leftx[i] and position[0] < rightx[i]:
                     if position[1] < downy and position[1] > upy:
-                        for i in range(len(player.hand) - 1):
-                                if player.hand[i].clicked:
-                                    player.hand[i].clicked = False
+                        player.unclick(player.hand)
                         player.hand[i].clicked = True
                         print(player.hand[i].clicked)
+
+
     def place_card(self, position, player):
         for i in range(len(player.hand)-1):
+            print(player.hand[i].clicked)
             if player.hand[i].clicked:
                 for ii in range(10):
                     if position[0] > left_x_of_card[ii] and position[0] < right_x_of_card[ii]:
-                        
                         if position[1] < down_attack_down_y and position[1] > down_attack_up_y:
                             player.hand[i].clicked = False
                             self.attacks[ii] = player.hand[i]

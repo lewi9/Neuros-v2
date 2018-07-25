@@ -53,6 +53,8 @@ class DrawObjects:
 
 
     def draw_hand(self):
+
+         "Draw Cards on hand"
         self.hand_list_of_left_x = []
         self.hand_list_of_right_x = []
         self.hand_area = WIDTHSCREEN - widthmargin*6
@@ -65,6 +67,8 @@ class DrawObjects:
             self.screen.blit(self.player.hand[i].image, (self.hand_list_of_left_x[i], self.hand_up_y))
 
     def draw_right_from_hand(self):
+
+        "Draw Cards, on right part of screen, from hand"
         position = pygame.mouse.get_pos()
         if len(self.hand_list_of_left_x) > 3:
             if self.hand_list_of_left_x[2] < self.hand_list_of_right_x[1]:
@@ -106,6 +110,7 @@ class DrawObjects:
         pygame.draw.rect(self.screen, color, button)
 
     def draw_player_area_cards(self, attacks, defense, barracks):
+        "This Draw a player areas cards"
         for i in range(10):
             if attacks[i] != None:
                 self.screen.blit(attacks[i].image, (left_x_of_card[i], down_attack_up_y))
