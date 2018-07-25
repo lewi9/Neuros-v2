@@ -135,12 +135,20 @@ class DrawObjects:
         "This Draw a player areas cards"
         for i in range(10):
             if attacks[i] != None:
-                self.screen.blit(attacks[i].image, (left_x_of_card[i], down_attack_up_y))
+                if attacks[i].reveal:
+                    self.screen.blit(attacks[i].image, (left_x_of_card[i], down_attack_up_y))
+                else:
+                    self.screen.blit(deck_image, (left_x_of_card[i], down_attack_up_y))
             if defense[i] != None:
-                
-                self.screen.blit(defense[i].image, (left_x_of_card[i], down_defense_up_y))
+                if defense[i].reveal:
+                    self.screen.blit(defense[i].image, (left_x_of_card[i], down_defense_up_y))
+                else:
+                    self.screen.blit(deck_image, (left_x_of_card[i], down_defense_up_y))
             if barracks[i] != None:
-                self.screen.blit(barracks[i].image, (left_x_of_card[i], down_barrack_up_y))
+                if barracks[i].reveal:
+                    self.screen.blit(barracks[i].image, (left_x_of_card[i], down_barrack_up_y))
+                else:
+                    self.screen.blit(deck_image, (left_x_of_card[i], down_barrack_up_y))
     
     def draw_enemy_area_cards(self):
         pass

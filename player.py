@@ -130,6 +130,9 @@ class Player:
     def end_turn(self):
         self.my_turn = False
         Card.end_turn_minus_frozen(self, self.barracks)
+        for i in range(10):
+            if self.defense[i] != None:
+                self.defense[i].reveal_turn = False
 
     def start_turn(self):
         self.my_turn = True
@@ -189,22 +192,33 @@ class Player:
     def move_from_barracks_to_attacks(self, position, player):
         for i in range(10):
             if self.barracks[i] != None:
-                print("XDU")
                 if self.barracks[i].clicked:
-                    print("Mypciu")
                     for ii in range(10):
-                        print("EE")
                         if position[0] > left_x_of_card[ii] and position[0] < right_x_of_card[ii]:
-                            print("XD")
                             if position[1] < down_attack_down_y and position[1] > down_attack_up_y:
-                                print("Coś")
                                 if self.attacks[ii] == None:
-                                    print("Ok")
                                     self.barracks[i].clicked = False
+                                    self.barracks[i].reveal = True
                                     self.attacks[ii] = self.barracks[i]
                                     self.barracks[i] = None
 
-                        
+    def reveal_defense(self, position):
+        reaveled = False
+        for i in range(10):
+            if self.defense[i] != None:
+                if self.defense[i].reveal_turn:
+                    reaveled = True
+        if reaveled != True:
+            for i in range(10):
+                if position[0] > left_x_of_card[i] and position[0] < right_x_of_card[i]:
+                    if position[1] < down_defense_down_y and position[1] > down_defense_up_y:
+                        if self.defense[i] != None:
+                            if self.defense[i].reveal != True:
+                                self.defense[i].reveal = True
+                                self.defense[i].reveal_turn = True
+
+
+            
                     
     def place_card(self, position, player, was_put_in_frozen):
         for i in range(len(player.hand)-1):
@@ -214,6 +228,7 @@ class Player:
                         if position[1] < down_attack_down_y and position[1] > down_attack_up_y:
                             if self.attacks[ii] == None and player.hand[i].frozen_time < 1:
                                 player.hand[i].clicked = False
+                                player.hand[i].reveal = True
                                 self.attacks[ii] = player.hand[i]
                                 player.hand.pop(i)
                         elif position[1] < down_defense_down_y and position[1] > down_defense_up_y:

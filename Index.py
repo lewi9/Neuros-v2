@@ -118,6 +118,7 @@ class Game:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse = pygame.mouse.get_pos()
                 clicked = wasclicked(mouse)
+                self.player.reveal_defense(mouse)
                 self.player.move_from_barracks_to_attacks(mouse, self.player)
                 self.barracks_put = self.player.place_card(mouse, self.player, self.barracks_put )
                 self.player.was_clicked_in_hand(mouse,
