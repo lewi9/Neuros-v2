@@ -107,7 +107,16 @@ class DrawObjects:
                     if player.barracks[i] != None:    
                         self.screen.blit(player.barracks[i].big_image, (card_viev_left_x, card_view_up_y))
 
+    def blit_hero(self):
+        mouse_position = pygame.mouse.get_pos()
+
             
+        if mouse_position[0] > up_deck_list_left_x[1] and mouse_position[0] < up_deck_list_right_x[1]:
+            if mouse_position[1] < up_deck_down_y and mouse_position[1] > up_deck_up_y:
+                self.screen.blit(big_hero, (card_viev_left_x, card_view_up_y))
+                
+            elif mouse_position[1] < down_deck_down_y and mouse_position[1] > down_deck_up_y:
+                self.screen.blit(big_yhero, (card_viev_left_x, card_view_up_y))
 
     def draw_text(self, text, size, color, x, y):
         """This draws a text in pygame. The x and y is the center of the text"""
