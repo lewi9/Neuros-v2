@@ -36,8 +36,8 @@ class Game:
         self.clock = pygame.time.Clock() # nie wiem jak to działa ale pozwala na fps
         
         self.running = True 
-        self.enemy_areas = {}
         self.player = Player()
+        self.card = Card()
 
         self.player1_data = {}
         self.player2_data = {}
@@ -118,9 +118,9 @@ class Game:
             self.player2_data["Player_2"] = self.connection.recv_player2_data
             if self.player2_data: # checks if enemy data exists
                 self.game_data.update(self.player2_data)
-                #Tu robię słownik, który będzie użyty przez drawer, line 158 in Index.py
-                #line 52 in card.py
-                # self.enemy_areas = Card.return_data(self.enemy_data[self.enemy_name], self.enemy_data[self.enemy_name]) 
+
+        if self.player2_data and self.player1_data:
+            self.enemy_areas = self.card.return_data(self.game_data[self.enemy_name])
 
         # this checks the player name and makes changes to the game data based on game events and updates
         if self.player.player_name == "Player_1":
@@ -201,11 +201,13 @@ class Game:
         self.drawer.draw_player_area_cards(self.player.attacks,
                                            self.player.defense,
                                            self.player.barracks)
-        #Rysuje tylko jak enemy_data istnieje, line 154 in drawings.py
-        # if self.enemy_data:
-            # self.drawer.draw_enemy_area_cards(self.enemy_areas["attacks"],
-            # 								  self.enemy_areas["defense"],
-            # 								  self.enemy_areas["barracks"])
+        if self.player2_data and self.player1_data:
+            self.drawer.draw_enemy_area_cards(self.enemy_areas["attacks"],
+                                              self.enemy_areas["defense"],
+                                              self.enemy_areas["barracks"])
+            self.drawer.draw_right_from_enemy_areas(self.enemy_areas["attacks"],
+                                                    self.enemy_areas["defense"],
+                                                    self.enemy_areas["barracks"])
         self.drawer.draw_right_from_hand()
         self.drawer.draw_right_from_areas(self.player)
         self.drawer.blit_hero()

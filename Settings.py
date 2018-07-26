@@ -31,4 +31,5 @@ yhero = pygame.image.load("graphics/yhero.jpg")
 big_hero = pygame.image.load("graphics/big_hero.jpg")
 big_yhero = pygame.image.load("graphics/big_yhero.jpg")
 deck_image = pygame.image.load("graphics/deck.png")
+big_deck = pygame.image.load("graphics/big_deck.png")
 
