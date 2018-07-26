@@ -49,15 +49,15 @@ for i in range(4):
 
 queen = []
 for i in range(4):
-    queen.append(Card("9" + color_cards[i], 12, 12, 1 , pygame.image.load("graphics/q.png"), pygame.image.load("graphics/big_q.png"))) 
+    queen.append(Card("q" + color_cards[i], 12, 12, 1 , pygame.image.load("graphics/q.png"), pygame.image.load("graphics/big_q.png"))) 
 
 king = []
 for i in range(4):
-    king.append(Card("9" + color_cards[i], 13, 13, 2 , pygame.image.load("graphics/k.png"), pygame.image.load("graphics/big_k.png"))) 
+    king.append(Card("k" + color_cards[i], 13, 13, 2 , pygame.image.load("graphics/k.png"), pygame.image.load("graphics/big_k.png"))) 
 
 ace = []
 for i in range(4):
-    ace.append(Card("9" + color_cards[i], 14, 14, 1 , pygame.image.load("graphics/a.png"), pygame.image.load("graphics/big_a.png"))) 
+    ace.append(Card("a" + color_cards[i], 14, 14, 1 , pygame.image.load("graphics/a.png"), pygame.image.load("graphics/big_a.png"))) 
 
 
 list_of_card = [

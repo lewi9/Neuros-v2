@@ -107,6 +107,31 @@ class DrawObjects:
                     if player.barracks[i] != None:    
                         self.screen.blit(player.barracks[i].big_image, (card_viev_left_x, card_view_up_y))
 
+    def draw_right_from_enemy_areas(self, attacks, defense, barracks):
+        position = pygame.mouse.get_pos()
+        for i in range(10):
+            if position[0] > left_x_of_card[i] and position[0] < right_x_of_card[i]:
+                if position[1] < up_attack_down_y and position[1] > up_attack_up_y:
+                    if attacks[i] != None:
+                        if attacks[i].reveal != True:
+                            self.screen.blit(big_deck, (card_viev_left_x, card_view_up_y))
+                        else:
+                            self.screen.blit(attacks[i].big_image, (card_viev_left_x, card_view_up_y))
+                if position[1] < up_defense_down_y and position[1] > up_defense_up_y:
+                    if defense[i] != None:
+                        if defense[i].reveal != True:
+                            self.screen.blit(big_deck, (card_viev_left_x, card_view_up_y))
+                        else:
+                            self.screen.blit(defense[i].big_image, (card_viev_left_x, card_view_up_y))
+                if position[1] < up_barrack_down_y and position[1] > up_barrack_up_y:
+                    if barracks[i] != None:
+                        if barracks[i].reveal != True:
+                            self.screen.blit(big_deck, (card_viev_left_x, card_view_up_y))
+                        else:
+                            self.screen.blit(barracks[i].big_image, (card_viev_left_x, card_view_up_y))
+            
+
+
     def blit_hero(self):
         mouse_position = pygame.mouse.get_pos()
 
