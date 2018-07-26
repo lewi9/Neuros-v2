@@ -13,8 +13,11 @@ class GameClient(socket.socket):
         """Ta funkcja inicjalizuję tą klase"""
         self.host = host
         self.port = port
-        self.recv_data = None
-        self.data_to_be_sent = None
+        self.recv_player1_data = None
+        self.recv_player2_data = None
+        self.player1_data_to_be_sent = None
+        self.player2_data_to_be_sent = None
+        self.communicating = True
         self.listening = True
         self.sending = True
         self.received_name = ""
@@ -39,36 +42,51 @@ class GameClient(socket.socket):
         """Ta funkcja czeka na wiadomość od drugiego klienta za pomocą serwera"""
 
         while self.listening:
-            conn = self.recv(16384).decode("utf-8")
-            if not conn:
+            player1_data = self.recv(16384).decode("utf-8")
+            if not player1_data:
                 self.listening = False
                 try:
                     self.shutdown(socket.SHUT_WR)
                     self.close()
                 except OSError:
                     pass
-
             try:
-                data = self.deserialize(conn)
-                if data:
-                    self.recv_data = data
-                # pp = pprint.PrettyPrinter()
-                # pp.pprint(self.recv_data)
-                # print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n")
+                data_player1 = self.deserialize(player1_data)
+                if data_player1:
+                    self.recv_player1_data = data_player1
             except json.decoder.JSONDecodeError:
-                # pp = pprint.PrettyPrinter()
-                # pp.pprint(conn)
-                # print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n")
-                print("json sie zdupil")
+                print("json sie zdupil .. player1")
+                self.player1_data_to_be_sent = None
+
+            player2_data = self.recv(16384).decode("utf-8")
+            if not player2_data:
+                self.listening = False
+                try:
+                    self.shutdown(socket.SHUT_WR)
+                    self.close()
+                except OSError:
+                    pass
+            try:
+                data_player2 = self.deserialize(player2_data)
+                if data_player2:
+                    self.recv_player2_data = data_player2
+            except json.decoder.JSONDecodeError:
+                print("json sie zdupil .. player2")
+                self.player2_data_to_be_sent = None
 
     def sender(self):
         """This method constantly sends information with a slight delay"""
         while self.sending:
-            self.send_data(self.data_to_be_sent)
+            self.send_data(self.player1_data_to_be_sent)
+            sleep(0.1)
+            self.send_data(self.player2_data_to_be_sent)
             sleep(0.5)
 
-    def update_data_to_be_sent(self, data):
-        self.data_to_be_sent = data
+    def update_player1_data_to_be_sent(self, data):
+        self.player1_data_to_be_sent = data
+
+    def update_player2_data_to_be_sent(self, data):
+        self.player2_data_to_be_sent = data
 
     def send_data(self, payload): 
         """Ta funkcja wysyła wiadomość do drugiego klienta za pomocą serwera"""
