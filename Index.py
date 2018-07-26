@@ -159,6 +159,7 @@ class Game:
         
             #Exit
             if event.type == pygame.QUIT:
+                print(self.enemy_name)
                 if self.playing:
                     self.playing = False
                 self.running = False
