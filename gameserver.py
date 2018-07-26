@@ -43,7 +43,8 @@ class ManageGames(socket.socket):
         self.localhost = localhost
         
         try:
-            self.server_address = self.getMyIP_and_Port() # address tego serwer'u
+            self.server_address = self.getMyIP_and_Port()
+            print(self.server_address) # address tego serwer'u
         except Exception as e:
             print(e)
 
@@ -52,7 +53,7 @@ class ManageGames(socket.socket):
         if self.localhost:
             self.bind(("localhost", PORT)) 
         else:
-            self.bind((self.server_address, PORT))
+            self.bind((self.server_address[0], PORT))
         
         self.amount_of_servers = 0
         self.servers = []

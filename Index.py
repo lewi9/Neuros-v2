@@ -61,7 +61,7 @@ class Game:
             
     def new(self):
         # start a new game
-        self.connect_to_server()#ip = self.ip) 
+        self.connect_to_server(ip = self.ip) 
         self.barracks_put = 0
         self.player.fill_deck()
         self.player.shuffle_deck()
@@ -163,10 +163,10 @@ class Game:
                                            self.player.defense,
                                            self.player.barracks)
         #Rysuje tylko jak enemy_data istnieje, line 154 in drawings.py
-        # if self.enemy_data:
-        # 	self.drawer.draw_enemy_area_cards(self.enemy_areas["attacks"],
-        # 									  self.enemy_areas["defense"],
-        # 									  self.enemy_areas["barracks"])
+        if self.enemy_data:
+            self.drawer.draw_enemy_area_cards(self.enemy_areas["attacks"],
+                                              self.enemy_areas["defense"],
+                                              self.enemy_areas["barracks"])
         self.drawer.draw_right_from_hand()
         self.drawer.draw_right_from_areas(self.player)
         self.drawer.blit_hero()
