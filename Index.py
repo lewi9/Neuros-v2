@@ -104,23 +104,16 @@ class Game:
         # Gameloop - Update
 
         # update game data
-        if self.player.player_name == "Player_1":
-            data = self.player.player_data()
-            self.player1_data_for_sending = data
-            self.game_data[self.player.player_name] = data
- 
-        elif self.player.player_name == "Player_2":
-            data = self.player.player_data()
-            self.player2_data_for_sending = data
-            self.game_data[self.player.player_name] = data
 
-        # This block checks for player data and appends it to game_data
+        # This block checks if there is a connection. If there is a conection then
+        # It updates the game data with the connection
         if self.connection.recv_player1_data != None:
             self.player1_data["Player_1"] = self.connection.recv_player1_data
             if self.player1_data:
                 self.game_data.update(self.player1_data)		
 
-        # This block checks for enemy data and appends it to game_data
+        # This block checks if there is a connection. If there is a conection then
+        # It updates the game data with the connection
         if self.connection.recv_player2_data != None:
             self.player2_data["Player_2"] = self.connection.recv_player2_data
             if self.player2_data: # checks if enemy data exists
@@ -129,19 +122,28 @@ class Game:
                 #line 52 in card.py
                 # self.enemy_areas = Card.return_data(self.enemy_data[self.enemy_name], self.enemy_data[self.enemy_name]) 
 
+        # this checks the player name and makes changes to the game data based on game events and updates
+        if self.player.player_name == "Player_1":
+            data = self.player.player_data()
+            self.player1_data_for_sending = data
+            self.game_data[self.player.player_name] = data
+ 
+        # this checks the player name and makes changes to the game data based on game events and updates
+        elif self.player.player_name == "Player_2":
+            data = self.player.player_data()
+            self.player2_data_for_sending = data
+            self.game_data[self.player.player_name] = data
+
+        # This updates the opponent/enemies' game data
         if self.game_data:
             if self.player.player_name == "Player_1":
-                # This block prepares updated player data to be sent to the opponent 
-                try:
-                    self.player1_data_for_sending = self.game_data[self.player.player_name]
+                try: # produces keyerror if hasn't recieved data from opponent
                     self.player2_data_for_sending = self.game_data[self.enemy_name]
                 except KeyError:
                     pass
 
             elif self.player.player_name == "Player_2":
-                # This block prepares updated player data to be sent to the opponent 
-                try:
-                    self.player2_data_for_sending = self.game_data[self.player.player_name]
+                try: # produces keyerror if hasn't recieved data from opponent
                     self.player1_data_for_sending = self.game_data[self.enemy_name]
                 except KeyError:
                     pass
