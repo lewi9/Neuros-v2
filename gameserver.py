@@ -40,7 +40,7 @@ class ManageGames(socket.socket):
     def __init__(self, localhost = False):
         super().__init__(socket.AF_INET, socket.SOCK_STREAM) # TCP
         
-        self.localhost = "25.34.50.28"  # ip of current host .. change as necessary
+        self.localhost = localhost  # ip of current host .. change as necessary
         
         # try:
         # 	self.server_address = self.getMyIP_and_Port()

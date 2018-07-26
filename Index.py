@@ -232,6 +232,9 @@ class Game:
                         
     def connect_to_server(self, ip = "localhost", port = PORT):
         # Connect to server
+        if not ip:
+            ip = "localhost"
+
         self.connection = GameClient(ip, port)
         self.player.player_name = self.connection.get_received_name()
 
