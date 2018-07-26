@@ -40,13 +40,13 @@ class ManageGames(socket.socket):
     def __init__(self, localhost = False):
         super().__init__(socket.AF_INET, socket.SOCK_STREAM) # TCP
         
-        self.localhost = localhost
+        self.localhost = "25.34.50.28"  # ip of current host .. change as necessary
         
-        try:
-            self.server_address = self.getMyIP_and_Port()
-            print(self.server_address) # address tego serwer'u
-        except Exception as e:
-            print(e)
+        # try:
+        # 	self.server_address = self.getMyIP_and_Port()
+        # 	print(self.server_address) # address tego serwer'u
+        # except Exception as e:
+        # 	print(e)
 
         self.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) # bez tego jest error
         

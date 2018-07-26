@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 from card import Card
 from base_of_card import *
 from random import shuffle

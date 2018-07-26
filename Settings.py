@@ -2,7 +2,7 @@ import pygame
 
 FPS = 30
 
-PORT = 5000 
+PORT = 12345
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)

@@ -153,8 +153,11 @@ class DrawObjects:
 
     #Tu taka funckja jak u góry, tylko inne parametry
     def draw_enemy_area_cards(self, attacks, defense, barracks):
+        
         for i in range(10):
+            print(defense[i])
             if attacks[i] != None:
+                
                 if attacks[i].reveal:
                     self.screen.blit(attacks[i].image, (left_x_of_card[i], up_attack_up_y))
                 else:
