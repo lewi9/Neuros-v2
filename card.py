@@ -94,13 +94,14 @@ class Card:
             9 : None
         }
         #Robię przegląd danych
-        print("XDDDDD")
+        
         for i in range(10):
             #Jeśli None to zapisz tam none
             if data["barracks_area"][str(i)] == None:
-                barracks[str(i)] = None
+                barracks[i] = None
             else:
                 #To jest pobranie pierwszej litery, czyli wartość karty np. "9" albo "2"
+
                 letter = list(data["barracks_area"][str(i)]["name"])
                 #"2" ma inne rozszerzenie obrazka
                 if letter[0] == "2":
@@ -108,23 +109,23 @@ class Card:
                 else:
                     rozszerzenie = ".png"
                 #Tutaj tworzę obiekt
-                barracks[str(i)] =      Card(data["barracks_area"][str(i)]["name"],
+                barracks[i] =      Card(data["barracks_area"][str(i)]["name"],
                                         data["barracks_area"][str(i)]["atk"], 
                                         data["barracks_area"][str(i)]["hp"], 
                                         data["barracks_area"][str(i)]["frozen_time"], 
                                         pygame.image.load("graphics/" + letter[0] + rozszerzenie), 
                                         pygame.image.load("graphics/big_" + letter[0] + rozszerzenie), 
-                                        data["barracks_area"][str(i)]["reveal"])
+                                        data["barracks_area"][str(i)]["reveal"])                      
             #Powtarzam kod dla innych stref
             if data["defense_area"][str(i)] == None:
-                defense[str(i)] = None
+                defense[i] = None
             else:
                 letter = list(data["defense_area"][str(i)]["name"])
                 if letter[0] == "2":
                     rozszerzenie = ".jpg"
                 else:
                     rozszerzenie = ".png"
-                defense[str(i)] =       Card(data["defense_area"][str(i)]["name"],
+                defense[i] =       Card(data["defense_area"][str(i)]["name"],
                                         data["defense_area"][str(i)]["atk"], 
                                         data["defense_area"][str(i)]["hp"], 
                                         data["defense_area"][str(i)]["frozen_time"], 
@@ -132,14 +133,14 @@ class Card:
                                         pygame.image.load("graphics/big_" + letter[0] + rozszerzenie), 
                                         data["defense_area"][str(i)]["reveal"])
             if data["attack_area"][str(i)] == None:
-                attacks[str(i)] = None
+                attacks[i] = None
             else:
                 letter = list(data["attack_area"][str(i)]["name"])
                 if letter[0] == "2":
                     rozszerzenie = ".jpg"
                 else:
                     rozszerzenie = ".png"
-                attacks[str(i)] =       Card(data["attack_area"][str(i)]["name"],
+                attacks[i] =       Card(data["attack_area"][str(i)]["name"],
                                         data["attack_area"][str(i)]["atk"], 
                                         data["attack_area"][str(i)]["hp"], 
                                         data["attack_area"][str(i)]["frozen_time"], 
