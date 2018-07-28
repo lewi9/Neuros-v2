@@ -77,6 +77,7 @@ class Game:
             self.clock.tick(FPS)
 
             self.update()
+            # print(self.game_data[self.player.player_name]["myTurn"])
             self.events()
             self.draw()
 
@@ -119,8 +120,6 @@ class Game:
             if self.player2_data: # checks if enemy data exists
                 self.game_data.update(self.player2_data)
 
-        if self.player2_data and self.player1_data:
-            self.enemy_areas = self.card.return_data(self.game_data[self.enemy_name])
 
         # this checks the player name and makes changes to the game data based on game events and updates
         if self.player.player_name == "Player_1":
@@ -133,6 +132,9 @@ class Game:
             data = self.player.player_data()
             self.player2_data_for_sending = data
             self.game_data[self.player.player_name] = data
+
+        if self.player2_data and self.player1_data:
+            self.enemy_areas = self.card.return_data(self.game_data[self.enemy_name])
 
         # This updates the opponent/enemies' game data
         if self.game_data:
@@ -149,9 +151,9 @@ class Game:
                     pass
 
 
-        pp = pprint.PrettyPrinter()
-        pp.pprint(self.game_data)
-        print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n")
+        # pp = pprint.PrettyPrinter()
+        # pp.pprint(self.game_data)
+        # print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n")
 
     def events(self):
         # Gameloop - Events

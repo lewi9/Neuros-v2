@@ -78,7 +78,7 @@ class GameClient(socket.socket):
         """This method constantly sends information with a slight delay"""
         while self.sending:
             self.send_data(self.player1_data_to_be_sent)
-            sleep(0.3)
+            sleep(0.1)
             self.send_data(self.player2_data_to_be_sent)
             sleep(0.5)
 

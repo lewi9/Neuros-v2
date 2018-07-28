@@ -1,5 +1,6 @@
 import socket
 import multiprocessing 
+from random import shuffle
 from Settings import PORT
 
 class GameInstanceServer:
@@ -82,16 +83,19 @@ class ManageGames(socket.socket):
         """Ta funkja czeka na graczy a jak są to tworzy nową instancje gry"""
         message = "You have successfully connected :D\nWaiting for player..."
 
+        players = ["Player_1", "Player_2"]
+        shuffle(players)
+
         while not self.clientsConnected: # jeżeli nie ma graczy, to czekaj
             self.listen(5)
 
             if not self.client1:
                 self.client1, self.client1_addr = self.accept()
-                self.client1.send("Player_1".encode("utf-8"))
+                self.client1.send(players[0].encode("utf-8"))
 
             if not self.client2:
                 self.client2, self.client2_addr = self.accept()
-                self.client2.sendall("Player_2".encode("utf-8"))
+                self.client2.sendall(players[1].encode("utf-8"))
                 self.clientsConnected = True
 
         print("Clients connected")

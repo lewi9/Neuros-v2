@@ -100,6 +100,9 @@ class Card:
                     dot = ".jpg"
                 else:
                     dot = ".png"
+                if letter[0] == "1":
+                    letter[0] = "10"
+                        
                 attacks[i] = Card(
                     letter[0],
                     data["attack_area"][str(i)]["atk"],
@@ -119,6 +122,9 @@ class Card:
                     dot = ".jpg"
                 else:
                     dot = ".png"
+                if letter[0] == "1":
+                    letter[0] = "10"
+                        
                 defese[i] = Card(
                     letter[0],
                     data["defense_area"][str(i)]["atk"],
@@ -138,6 +144,9 @@ class Card:
                     dot = ".jpg"
                 else:
                     dot = ".png"
+                if letter[0] == "1":
+                    letter[0] = "10"
+
                 barracks[i] = Card(
                     letter[0],
                     data["barracks_area"][str(i)]["atk"],
