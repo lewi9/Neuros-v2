@@ -215,7 +215,7 @@ class Game:
         self.drawer.draw_right_from_areas(self.player)
         self.drawer.blit_hero()
         #jest tylko testowy jeżeli przeszkadza to ta funkcja jest w client_test_button.py
-        draw_test_button(self.screen)
+        draw_test_button(self.screen, self.player.player_name)
         
         #This is End Turn Button
         self.end_turn.create()

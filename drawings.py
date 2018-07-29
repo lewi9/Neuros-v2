@@ -180,7 +180,6 @@ class DrawObjects:
     def draw_enemy_area_cards(self, attacks, defense, barracks):
         
         for i in range(10):
-            print(defense[i])
             if attacks[i] != None:
                 
                 if attacks[i].reveal:

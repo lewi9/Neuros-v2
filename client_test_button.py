@@ -3,12 +3,12 @@ import pygame
 import random
 import string
 
-def draw_test_button(screen):
+def draw_test_button(screen, name):
     button = pygame.Rect(700, 0, 50, 50)
-    pygame.draw.rect(screen, (0, 0, 0), button)
+    #pygame.draw.rect(screen, (0, 0, 0), button)
 
     myfont = pygame.font.SysFont("monospace", 15)
-    label = myfont.render("TEST", 1, (255,255,0))
+    label = myfont.render(name, 1, (255,255,0))
     screen.blit(label, (705, 10))
 
 def wasclicked(cords):
